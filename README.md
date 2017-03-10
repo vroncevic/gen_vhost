@@ -1,4 +1,4 @@
-Generate VirtualHost configuration model (Apache 2v2 && 2v4) (Python codes).
+Generate VirtualHost configuration file (Apache 2v2 && 2v4).
 ================================================================================
 
 The README is used to introduce the modules and provide instructions on
