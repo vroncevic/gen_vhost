@@ -1,0 +1,11 @@
+<VirtualHost $ports>
+	ServerName $server_name
+	DocumentRoot $root_doc
+	ServerAdmin $admin_email
+	AddHandler cgi-script .php
+	Alias $url $target_dir
+	<Directory $target_dir/>
+		Options +ExecCGI +Includes +FollowSymlinks
+		AllowOverride All
+	</Directory>
+</VirtualHost>

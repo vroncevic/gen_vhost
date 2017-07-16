@@ -1,0 +1,14 @@
+<VirtualHost $ports>
+	ServerName $server_name
+	ServerAlias redmine
+	DocumentRoot $root_doc
+	RailsBaseURI /
+	RailsEnv production
+	PassengerMaxPoolSize 4
+	<Directory $app_path>
+		Options FollowSymLinks
+		AllowOverride None
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>

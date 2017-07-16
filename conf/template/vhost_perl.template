@@ -1,0 +1,7 @@
+<VirtualHost $ports>
+	# mod_perl
+	PerlOptions +Parent
+	PerlSwitches -Mlib=$app_path
+	DocumentRoot $app_path
+	ServerName $server_name
+</VirtualHost>
