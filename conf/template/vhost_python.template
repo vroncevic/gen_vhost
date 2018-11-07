@@ -1,0 +1,13 @@
+<VirtualHost $ports>
+    ServerName $server_name
+    DocumentRoot $root_doc
+    ServerAdmin $admin_email
+    Alias $url $target_dir
+
+    # WSGIScriptAlias / var/www/mydomain.com/index.wsgi
+    # Alias /static/ /var/www/mydomain.com/static/
+    # <Location "/static/">
+    #     Options -Indexes
+    # </Location >
+</VirtualHost>
+
