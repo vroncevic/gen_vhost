@@ -58,6 +58,12 @@ class WriteTemplate(object):
                 __MODLC - Module key lower case for template
                 __DATE - Date key for template
                 __YEAR - Year key for template
+                __PORTS -  Ports key for template
+                __SERVER - Server key for template
+                __ROOT_DOC - Root doc key for template
+                __ADMIN_EMAIL - Administrator email key for template
+                __TARGET_DIR - Target directory key for template
+                __URL - Url key for template
             method:
                 __init__ - Initial constructor
                 write - Write a template content with parameters to a file
@@ -74,7 +80,8 @@ class WriteTemplate(object):
         '__SERVER',
         '__ROOT_DOC',
         '__ADMIN_EMAIL',
-        '__TARGET_DIR'
+        '__TARGET_DIR',
+        '__URL'
     )
     VERBOSE = 'GEN_VHOST::VHOST::WRITE_TEMPLATE'
     __CHMOD = 0666
