@@ -1,5 +1,9 @@
 # Generate VirtualHost configuration file (Apache 2v2 && 2v4)
 
+gen_vhost is toolset for generation virtual host configuration file.
+
+Developed in python code: 100%.
+
 The README is used to introduce the modules and provide instructions on
 how to install the modules, any machine dependencies it may have and any
 other information that should be provided before the modules are installed.
@@ -16,9 +20,47 @@ cp -R ~/gen_vhost/log/   /root/scripts/gen_vhost/ver.1.0/
 
 ### DEPENDENCIES
 
-This module requires these other modules and libraries:
+This module requires other modules and libraries:
 
 * ats_utilities https://vroncevic.github.io/ats_utilities
+
+### GENERATION FLOW OF LINUX KERNEL MODULE
+
+Base flow of generation process:
+
+![alt tag](https://raw.githubusercontent.com/vroncevic/gen_vhost/dev/python-tool-docs/gen_vhost_flow.png)
+
+### TOOL STRUCTURE
+
+gen_vhost is based on Template mechanism:
+
+![alt tag](https://raw.githubusercontent.com/vroncevic/gen_vhost/dev/python-tool-docs/gen_vhost.png)
+
+Generator structure:
+
+```
+.
+├── bin
+│   ├── gen_vhost.py
+│   ├── gen_vhost_run.py
+│   └── virtual_host
+│       ├── __init__.py
+│       ├── read_template.py
+│       ├── vhost.py
+│       ├── vhost_selector.py
+│       └── write_template.py
+├── conf
+│   ├── gen_vhost.cfg
+│   ├── gen_vhost_util.cfg
+│   └── template
+│       ├── vhost_perl.template
+│       ├── vhost_php.template
+│       ├── vhost_python.template
+│       ├── vhost_ruby.template
+│       └── vhost_static.template
+└── log
+    └── gen_vhost.log
+```
 
 ### COPYRIGHT AND LICENCE
 
