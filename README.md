@@ -8,14 +8,19 @@ The README is used to introduce the modules and provide instructions on
 how to install the modules, any machine dependencies it may have and any
 other information that should be provided before the modules are installed.
 
+![Python package](https://github.com/vroncevic/gen_vhost/workflows/Python%20package/badge.svg)
+
 ### INSTALLATION
+Navigate to release [page](https://github.com/vroncevic/gen_vhost/releases/tag/v1.0) download and extract release archive.
 
 To install this set of modules type the following:
 
 ```
-cp -R ~/gen_vhost/bin/   /root/scripts/gen_vhost/ver.1.0/
-cp -R ~/gen_vhost/conf/  /root/scripts/gen_vhost/ver.1.0/
-cp -R ~/gen_vhost/log/   /root/scripts/gen_vhost/ver.1.0/
+tar xvzf gen_vhost-1.0.tar.gz
+cd gen_vhost-1.0/python-tool
+cp -R ~/bin/   /root/scripts/gen_vhost/
+cp -R ~/conf/  /root/scripts/gen_vhost/
+cp -R ~/log/   /root/scripts/gen_vhost/
 ```
 
 ### DEPENDENCIES

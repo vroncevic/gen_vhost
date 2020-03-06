@@ -1,30 +1,35 @@
 # -*- coding: UTF-8 -*-
-# gen_vhost.py
-# Copyright (C) 2018 Vladimir Roncevic <elektron.ronca@gmail.com>
-#
-# gen_vhost is free software: you can redistribute it and/or modify it
-# under the terms of the GNU General Public License as published by the
-# Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# gen_vhost is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program. If not, see <http://www.gnu.org/licenses/>.
-#
+
+"""
+ Module
+     vhost_selector.py
+ Copyright
+     Copyright (C) 2018 Vladimir Roncevic <elektron.ronca@gmail.com>
+     gen_vhost is free software: you can redistribute it and/or modify it
+     under the terms of the GNU General Public License as published by the
+     Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     gen_vhost is distributed in the hope that it will be useful, but
+     WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     See the GNU General Public License for more details.
+     You should have received a copy of the GNU General Public License along
+     with this program. If not, see <http://www.gnu.org/licenses/>.
+ Info
+     Main entry point of tool gen_vhost.
+"""
 
 import sys
 from inspect import stack
 
 try:
+    from ats_utilities.console_io.error import error_message
+    from ats_utilities.console_io.verbose import verbose_message
     from ats_utilities.exceptions.ats_type_error import ATSTypeError
     from ats_utilities.exceptions.ats_bad_call_error import ATSBadCallError
-except ImportError as e:
-    msg = "\n{0}\n{1}\n".format(__file__, e)
-    sys.exit(msg)  # Force close python ATS ##################################
+except ImportError as error:
+    MESSAGE = "\n{0}\n{1}\n".format(__file__, error)
+    sys.exit(MESSAGE)  # Force close python ATS ##############################
 
 __author__ = 'Vladimir Roncevic'
 __copyright__ = 'Copyright 2018, Free software to use and distributed it.'
@@ -78,42 +83,48 @@ class VHostSelector(object):
     }
 
     @classmethod
-    def choose_module(cls):
+    def choose_module(cls, verbose=False):
         """
             Selecting type of virtual host.
+            :param verbose: Enable/disable verbose option
+            :type verbose: <bool>
             :return: Module type id
             :rtype: <int>
             :exceptions: None
         """
-        console_txt = 'VirtualHost option list:'
-        msg = "\n{0}".format(console_txt)
-        print(msg)
-        virtual_hosts = sorted(VHostSelector.__VHOSTS)
+        print("\n{0}".format('VirtualHost option list:'))
+        verbose_message(cls.VERBOSE, verbose, 'Selecting module')
+        virtual_hosts = sorted(cls.__VHOSTS)
         for key in virtual_hosts:
-            msg = "  {0} {1}".format(key, VHostSelector.__VHOSTS[key])
-            print(msg)
+            print("  {0} {1}".format(key, cls.__VHOSTS[key]))
         while True:
-            msg = ' Select virtual host: '
-            module_type = input(msg)
-            virtual_host_keys = VHostSelector.__VHOSTS.keys()
+            try:
+                module_type = int(raw_input(' Select virtual host: '))
+            except NameError:
+                module_type = int(input(' Select virtual host: '))
+            virtual_host_keys = cls.__VHOSTS.keys()
             if module_type not in virtual_host_keys:
-                msg = ' Not an appropriate choice.'
-                print(msg)
+                error_message(
+                    cls.VERBOSE, 'Not an appropriate choice.'
+                )
             else:
                 break
         return module_type
 
     @classmethod
-    def format_name(cls, virtual_host_name):
+    def format_name(cls, virtual_host_name, verbose=False):
         """
             Formatting name for file virtual_host.
             :param virtual_host_name: File name for virtual host
             :type virtual_host_name: <str>
+            :param verbose: Enable/disable verbose option
+            :type verbose: <bool>
             :return: File name with extension | None
             :rtype: <str> | <NoneType>
             :exceptions: ATSBadCallError | ATSTypeError
         """
         func, virtual_host, virtual_host_lower = stack()[0][3], None, None
+        verbose_message(cls.VERBOSE, verbose, 'Formating name')
         vh_name_txt = 'Argument: expected virtual_host_name <str> object'
         vh_name_msg = "{0} {1} {2}".format('def', func, vh_name_txt)
         if virtual_host_name is None or not virtual_host_name:
@@ -124,4 +135,3 @@ class VHostSelector(object):
         if virtual_host_lower:
             virtual_host = "{0}{1}".format(virtual_host_lower, '.conf')
         return virtual_host
-
