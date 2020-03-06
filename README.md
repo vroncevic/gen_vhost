@@ -1,4 +1,4 @@
-# Generate VirtualHost configuration file (Apache 2v2 && 2v4)
+# Generate VirtualHost configuration file (Apache 2v2/2v4)
 
 gen_vhost is toolset for generation virtual host configuration file.
 
