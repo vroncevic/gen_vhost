@@ -1,20 +1,24 @@
 # -*- coding: UTF-8 -*-
-# gen_vhost.py
-# Copyright (C) 2018 Vladimir Roncevic <elektron.ronca@gmail.com>
-#
-# gen_vhost is free software: you can redistribute it and/or modify it
-# under the terms of the GNU General Public License as published by the
-# Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# gen_vhost is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program. If not, see <http://www.gnu.org/licenses/>.
-#
+
+"""
+ Module
+     gen_vhost.py
+ Copyright
+     Copyright (C) 2018 Vladimir Roncevic <elektron.ronca@gmail.com>
+     gen_vhost is free software: you can redistribute it and/or modify it
+     under the terms of the GNU General Public License as published by the
+     Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     gen_vhost is distributed in the hope that it will be useful, but
+     WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     See the GNU General Public License for more details.
+     You should have received a copy of the GNU General Public License along
+     with this program. If not, see <http://www.gnu.org/licenses/>.
+ Info
+     Define class VHost with attribute(s) and method(s).
+     Generate virtual host configuration module by template and parameters.
+"""
 
 import sys
 from inspect import stack
@@ -25,12 +29,11 @@ try:
     from virtual_host.vhost_selector import VHostSelector
 
     from ats_utilities.console_io.verbose import verbose_message
-    from ats_utilities.console_io.error import error_message
     from ats_utilities.exceptions.ats_type_error import ATSTypeError
     from ats_utilities.exceptions.ats_bad_call_error import ATSBadCallError
-except ImportError as e:
-    msg = "\n{0}\n{1}\n".format(__file__, e)
-    sys.exit(msg)  # Force close python ATS ##################################
+except ImportError as error:
+    MESSAGE = "\n{0}\n{1}\n".format(__file__, error)
+    sys.exit(MESSAGE)  # Force close python ATS ##############################
 
 __author__ = 'Vladimir Roncevic'
 __copyright__ = 'Copyright 2018, Free software to use and distributed it.'
@@ -54,6 +57,8 @@ class VHost(object):
                 __writer - Writer API
             method:
                 __init__ - Initial constructor
+                get_reader - Getter for reader object
+                get_writer - Getter for writer object
                 gen_vh_module - Generate virtual host configuration module
     """
 
@@ -71,9 +76,29 @@ class VHost(object):
         self.__reader = ReadTemplate(verbose=verbose)
         self.__writer = WriteTemplate(verbose=verbose)
 
-    def gen_vh_module(self, module_name):
+    def get_reader(self):
+        """
+            Getter for reader object.
+            :return: Read template object
+            :rtype: <ReadTemplate>
+            :exceptions: None
+        """
+        return self.__reader
+
+    def get_writer(self):
+        """
+            Getter for writer object.
+            :return: Write template object
+            :rtype: <WriteTemplate>
+            :exceptions: None
+        """
+        return self.__writer
+
+    def gen_vh_module(self, module_name, verbose=False):
         """
             Generate file virtual host configuration module.
+            :param verbose: Enable/disable verbose option
+            :type verbose: <bool>
             :param module_name: Parameter virtual_host name
             :type module_name: <str>
             :return: Boolean status, True (success) | False
@@ -82,6 +107,7 @@ class VHost(object):
         """
         func, status = stack()[0][3], False
         module_type, module_content = None, None
+        verbose_message(VHost.VERBOSE, verbose, 'generate virtualhost')
         module_name_txt = 'Argument: expected module_name <str> object'
         module_name_msg = "{0} {1} {2}".format('def', func, module_name_txt)
         if module_name is None or not module_name:
@@ -90,10 +116,11 @@ class VHost(object):
             raise ATSTypeError(module_name_msg)
         module_type = VHostSelector.choose_module()
         if module_type != VHostSelector.CANCEL:
-            module_content = self.__reader.read(module_type)
+            module_content = self.__reader.read(module_type, verbose=verbose)
             if module_content:
-                status = self.__writer.write(module_content, module_name)
+                status = self.__writer.write(
+                    module_content, module_name, verbose=verbose
+                )
         else:
             status = True
         return True if status else False
-
