@@ -9,6 +9,8 @@ how to install the modules, any machine dependencies it may have and any
 other information that should be provided before the modules are installed.
 
 ![Python package](https://github.com/vroncevic/gen_vhost/workflows/Python%20package/badge.svg?branch=master)
+ [![GitHub issues open](https://img.shields.io/github/issues/vroncevic/gen_vhost.svg)](https://github.com/vroncevic/gen_vhost/issues)
+ [![GitHub contributors](https://img.shields.io/github/contributors/vroncevic/gen_vhost.svg)](https://github.com/vroncevic/gen_vhost/graphs/contributors)
 
 ### INSTALLATION
 Navigate to release [page](https://github.com/vroncevic/gen_vhost/releases/tag/v1.0) download and extract release archive.
@@ -68,6 +70,8 @@ Generator structure:
 ```
 
 ### COPYRIGHT AND LICENCE
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 Copyright (C) 2018 by https://vroncevic.github.io/gen_vhost
 
