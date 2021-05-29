@@ -23,9 +23,9 @@ other information that should be provided before the modules are installed.
     - [Install using setuptools](#install-using-setuptools)
     - [Install using docker](#install-using-docker)
 - [Dependencies](#dependencies)
+- [Generation flow](#generation-flow)
 - [Tool structure](#tool-structure)
-- [Docs](#docs)
-- [Copyright and Licence](#copyright-and-licence)
+- [Copyright and licence](#copyright-and-licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
