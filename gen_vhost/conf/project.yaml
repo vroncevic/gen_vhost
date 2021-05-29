@@ -1,0 +1,9 @@
+templates:
+  - Perl: vhost_perl.template
+  - PHP: vhost_php.template
+  - Python: vhost_python.template
+  - Ruby: vhost_ruby.template
+  - Static: vhost_static.template
+  - cancel: null
+
+module: '{0}.conf'
