@@ -21,10 +21,10 @@
 '''
 
 import sys
-from os import getcwd
 from os.path import exists
 
 try:
+    from six import add_metaclass
     from pathlib import Path
     from gen_vhost.pro import VHost
     from ats_utilities.logging import ATSLogger
@@ -41,12 +41,13 @@ __author__ = 'Vladimir Roncevic'
 __copyright__ = 'Copyright 2017, https://vroncevic.github.io/gen_vhost'
 __credits__ = ['Vladimir Roncevic']
 __license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 __maintainer__ = 'Vladimir Roncevic'
 __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
 
 
+@add_metaclass(CooperativeMeta)
 class GenVHost(CfgCLI):
     '''
         Defined class GenVHost with attribute(s) and method(s).
@@ -54,7 +55,6 @@ class GenVHost(CfgCLI):
         It defines:
 
             :attributes:
-                | __metaclass__ - setting cooperative metaclasses.
                 | GEN_VERBOSE - console text indicator for process-phase.
                 | CONFIG - configuration file path.
                 | LOG - tool log file path.
@@ -66,7 +66,6 @@ class GenVHost(CfgCLI):
                 | __str__ - dunder method for GenVHost.
     '''
 
-    __metaclass__ = CooperativeMeta
     GEN_VERBOSE = 'GEN_VHOST'
     CONFIG = '/conf/gen_vhost.cfg'
     LOG = '/log/gen_vhost.log'
