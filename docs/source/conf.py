@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 project = u'gen_vhost'
 copyright = u'2017, Vladimir Roncevic <elektron.ronca@gmail.com>'
 author = u'Vladimir Roncevic <elektron.ronca@gmail.com>'
-version = u'v1.1.0'
+version = u'v1.1.1'
 release = u'https://github.com/vroncevic/gen_vhost/releases'
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
 templates_path = ['_templates']
