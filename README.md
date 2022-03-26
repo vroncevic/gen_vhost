@@ -96,7 +96,7 @@ Base flow of generation process
 
 ![Generator block](https://raw.githubusercontent.com/vroncevic/gen_vhost/dev/docs/gen_vhost.png)
 
-Generator structure:
+Generator structure
 
 ```bash
 gen_vhost/
