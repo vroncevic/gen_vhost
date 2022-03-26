@@ -2,8 +2,14 @@ name: gen_vhost py checker
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'gen_vhost/**'
+      - 'setup.py'
   pull_request:
     branches: [ master ]
+    paths:
+      - 'gen_vhost/**'
+      - 'setup.py'
 jobs:
   build:
     runs-on: ubuntu-latest
