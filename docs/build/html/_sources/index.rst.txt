@@ -3,7 +3,7 @@ Generate VirtualHost configuration file (Apache 2v2/2v4)
 
 **gen_vhost** is toolset for generation virtual host configuration file.
 
-Developed in `python <https://www.python.org/>`_ code: **100%**.
+Developed in `python <https://www.python.org/>`_ code.
 
 The README is used to introduce the modules and provide instructions on
 how to install the modules, any machine dependencies it may have and any
@@ -25,7 +25,7 @@ other information that should be provided before the modules are installed.
 
 .. toctree::
    :maxdepth: 4
-   :caption: Contents:
+   :caption: Contents
 
    self
    modules
@@ -45,7 +45,7 @@ Navigate to release `page`_ download and extract release archive.
 
 .. _page: https://github.com/vroncevic/gen_vhost/releases
 
-To install this set of modules type the following:
+To install this set of modules type the following
 
 .. code-block:: bash
 
@@ -62,7 +62,7 @@ To install this set of modules type the following:
     python3 setup.py install_egg_info
     python3 setup.py install_data
 
-You can use Docker to create image/container, or You can use pip to install:
+You can use Docker to create image/container, or You can use pip to install
 
 .. code-block:: bash
 
@@ -79,21 +79,22 @@ You can use Docker to create image/container, or You can use pip to install:
 Dependencies
 -------------
 
-**gen_vhost** requires next modules and libraries:
+**gen_vhost** requires next modules and libraries
 
 * `ats-utilities - Python App/Tool/Script Utilities <https://pypi.org/project/ats-utilities/>`_
 
 Tool structure
 ------------------
 
-**gen_vhost** is based on OOP:
+**gen_vhost** is based on OOP
 
-Code structure:
+Code structure
 
 .. code-block:: bash
 
     gen_vhost/
     ├── conf/
+    │   ├── gen_vhost.logo
     │   ├── gen_vhost.cfg
     │   ├── gen_vhost_util.cfg
     │   ├── project.yaml

@@ -21,12 +21,12 @@
 '''
 
 import sys
-from os.path import exists
+from os.path import exists, dirname, realpath
 
 try:
     from six import add_metaclass
-    from pathlib import Path
     from gen_vhost.pro import VHost
+    from ats_utilities.splash import Splash
     from ats_utilities.logging import ATSLogger
     from ats_utilities.cli.cfg_cli import CfgCLI
     from ats_utilities.cooperative import CooperativeMeta
@@ -58,6 +58,7 @@ class GenVHost(CfgCLI):
                 | GEN_VERBOSE - console text indicator for process-phase.
                 | CONFIG - configuration file path.
                 | LOG - tool log file path.
+                | LOGO - logo for splash screen.
                 | OPS - list of tool options.
                 | logger - logger object API.
             :methods:
@@ -69,6 +70,7 @@ class GenVHost(CfgCLI):
     GEN_VERBOSE = 'GEN_VHOST'
     CONFIG = '/conf/gen_vhost.cfg'
     LOG = '/log/gen_vhost.log'
+    LOGO = '/conf/gen_vhost.logo'
     OPS = ['-g', '--gen', '-v', '--verbose', '--version']
 
     def __init__(self, verbose=False):
@@ -79,7 +81,15 @@ class GenVHost(CfgCLI):
             :type verbose: <bool>
             :exceptions: None
         '''
-        current_dir = Path(__file__).resolve().parent
+        current_dir = dirname(realpath(__file__))
+        gen_vhost_property = {
+            'ats_organization': 'vroncevic',
+            'ats_repository': 'gen_vhost',
+            'ats_name': 'gen_vhost',
+            'ats_logo_path': '{0}{1}'.format(current_dir, GenVHost.LOGO),
+            'ats_use_github_infrastructure': True
+        }
+        splash = Splash(gen_vhost_property, verbose=verbose)
         base_info = '{0}{1}'.format(current_dir, GenVHost.CONFIG)
         CfgCLI.__init__(self, base_info, verbose=verbose)
         verbose_message(GenVHost.GEN_VERBOSE, verbose, 'init tool info')
