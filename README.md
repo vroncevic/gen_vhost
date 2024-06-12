@@ -22,8 +22,6 @@ other information that should be provided before the modules are installed.
     - [Install using py setup](#install-using-py-setup)
     - [Install using docker](#install-using-docker)
 - [Dependencies](#dependencies)
-- [Usage](#usage)
-- [Supported MCUS](#supported-mcus)
 - [Tool structure](#tool-structure)
 - [Docs](#docs)
 - [Contributing](#contributing)
