@@ -1,5 +1,5 @@
-AVR project skeleton generator
-===============================
+Virtual Host configuration generator
+=====================================
 
 **gen_vhost** is toolset for generation of apache virtual host skeleton for
 development embedded applications.
