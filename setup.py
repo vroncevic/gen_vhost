@@ -2,113 +2,72 @@
 # -*- coding: UTF-8 -*-
 
 '''
- Module
-     setup.py
- Copyright
-     Copyright (C) 2017 Vladimir Roncevic <elektron.ronca@gmail.com>
-     gen_vhost is free software: you can redistribute it and/or modify it
-     under the terms of the GNU General Public License as published by the
-     Free Software Foundation, either version 3 of the License, or
-     (at your option) any later version.
-     gen_vhost is distributed in the hope that it will be useful, but
-     WITHOUT ANY WARRANTY; without even the implied warranty of
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     See the GNU General Public License for more details.
-     You should have received a copy of the GNU General Public License along
-     with this program. If not, see <http://www.gnu.org/licenses/>.
- Info
-     Define setup for tool gen_vhost.
+Module
+    setup.py
+Copyright
+    Copyright (C) 2017 - 2024 - 2024 Vladimir Roncevic <elektron.ronca@gmail.com>
+    gen_vhost is free software: you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    gen_vhost is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License along
+    with this program. If not, see <http://www.gnu.org/licenses/>.
+Info
+    Defines setup for tool gen_vhost.
 '''
 
 from __future__ import print_function
-import sys
-from os.path import abspath, dirname, join, exists
+from typing import List
+from os.path import abspath, dirname, join
 from setuptools import setup
 
 __author__ = 'Vladimir Roncevic'
-__copyright__ = 'Copyright 2017, https://vroncevic.github.io/gen_vhost'
-__credits__ = ['Vladimir Roncevic']
+__copyright__ = '(C) 2017, https://vroncevic.github.io/gen_vhost'
+__credits__: List[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 __maintainer__ = 'Vladimir Roncevic'
 __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
 
-
-def install_directory():
-    '''
-        Return the installation directory, or None.
-
-        :return: path (success) | None.
-        :rtype: <str> | <NoneType>
-        :exceptions: None
-    '''
-    py_version = '{0}.{1}'.format(sys.version_info[0], sys.version_info[1])
-    if '--github' in sys.argv:
-        index = sys.argv.index('--github')
-        sys.argv.pop(index)
-        paths = (
-            '{0}/lib/python{1}/dist-packages/'.format(sys.prefix, py_version),
-            '{0}/lib/python{1}/site-packages/'.format(sys.prefix, py_version)
-        )
-    else:
-        paths = (s for s in (
-            '{0}/local/lib/python{1}/dist-packages/'.format(
-                sys.prefix, py_version
-            ),
-            '{0}/local/lib/python{1}/site-packages/'.format(
-                sys.prefix, py_version
-            )
-        ))
-    message = None
-    for path in paths:
-        message = '[setup] check path {0}'.format(path)
-        print(message)
-        if exists(path):
-            message = '[setup] use path {0}'.format(path)
-            print(message)
-            return path
-    message = '[setup] no installation path found, check {0}\n'.format(
-        sys.prefix
-    )
-    print(message)
-    return None
-
-
-INSTALL_DIR = install_directory()
-TOOL_DIR = 'gen_vhost/'
-if not bool(INSTALL_DIR):
-    print('[setup] force exit from install process')
-    sys.exit(127)
-THIS_DIR, LONG_DESCRIPTION = abspath(dirname(__file__)), None
-with open(join(THIS_DIR, 'README.md')) as readme:
-    LONG_DESCRIPTION = readme.read()
-PROGRAMMING_LANG = 'Programming Language :: Python ::'
-VERSIONS = ['2.7', '3', '3.2', '3.3', '3.4']
-SUPPORTED_PY_VERSIONS = [
-    '{0} {1}'.format(PROGRAMMING_LANG, VERSION) for VERSION in VERSIONS
+TOOL_DIR: str = 'gen_vhost/'
+CONF: str = 'conf'
+TEMPLATE: str = 'conf/template'
+LOG: str = 'log'
+THIS_DIR: str = abspath(dirname(__file__))
+long_description: str | None = None
+with open(join(THIS_DIR, 'README.md'), encoding='utf-8') as readme:
+    long_description = readme.read()
+PROGRAMMING_LANG: str = 'Programming Language :: Python ::'
+VERSIONS: List[str] = ['3.10', '3.11']
+SUPPORTED_PY_VERSIONS: List[str] = [
+    f'{PROGRAMMING_LANG} {VERSION}' for VERSION in VERSIONS
 ]
-LICENSE_PREFIX = 'License :: OSI Approved ::'
-LICENSES = [
+LICENSE_PREFIX: str = 'License :: OSI Approved ::'
+LICENSES: List[str] = [
     'GNU Lesser General Public License v2 (LGPLv2)',
     'GNU Lesser General Public License v2 or later (LGPLv2+)',
     'GNU Lesser General Public License v3 (LGPLv3)',
     'GNU Lesser General Public License v3 or later (LGPLv3+)',
     'GNU Library or Lesser General Public License (LGPL)'
 ]
-APPROVED_LICENSES = [
-    '{0} {1}'.format(LICENSE_PREFIX, LICENSE) for LICENSE in LICENSES
+APPROVED_LICENSES: List[str] = [
+    f'{LICENSE_PREFIX} {LICENSE}' for LICENSE in LICENSES
 ]
-PYP_CLASSIFIERS = SUPPORTED_PY_VERSIONS + APPROVED_LICENSES
+PYP_CLASSIFIERS: List[str] = SUPPORTED_PY_VERSIONS + APPROVED_LICENSES
 setup(
     name='gen_vhost',
-    version='1.1.1',
+    version='1.1.2',
     description='VirtualHost generator',
     author='Vladimir Roncevic',
     author_email='elektron.ronca@gmail.com',
     url='https://vroncevic.github.io/gen_vhost/',
-    license='GPL 2017 Free software to use and distributed it.',
-    long_description=LONG_DESCRIPTION,
+    license='GPL 2017 - 2024 Free software to use and distributed it.',
+    long_description=long_description,
     long_description_content_type='text/markdown',
     keywords='VH, VirtualHost, project, Apache, Unix, Linux',
     platforms='POSIX',
@@ -117,17 +76,22 @@ setup(
     install_requires=['ats-utilities'],
     package_data={
         'gen_vhost': [
-            'conf/gen_vhost.logo',
-            'conf/gen_vhost.cfg',
-            'conf/gen_vhost_util.cfg',
-            'conf/project.yaml',
-            'conf/template/vhost_perl.template',
-            'conf/template/vhost_php.template',
-            'conf/template/vhost_python.template',
-            'conf/template/vhost_ruby.template',
-            'conf/template/vhost_static.template',
-            'log/gen_vhost.log'
+            'py.typed',
+            f'{CONF}/gen_vhost.logo',
+            f'{CONF}/gen_vhost.cfg',
+            f'{CONF}/gen_vhost_util.cfg',
+            f'{CONF}/project.yaml',
+            f'{TEMPLATE}/vhost_perl.template',
+            f'{TEMPLATE}/vhost_php.template',
+            f'{TEMPLATE}/vhost_python.template',
+            f'{TEMPLATE}/vhost_ruby.template',
+            f'{TEMPLATE}/vhost_static.template',
+            f'{LOG}/gen_vhost.log'
         ]
     },
-    data_files=[('/usr/local/bin/', ['gen_vhost/run/gen_vhost_run.py'])]
+    data_files=[(
+        '/usr/local/bin/', [
+            f'{TOOL_DIR}run/gen_vhost_run.py'
+        ]
+    )]
 )

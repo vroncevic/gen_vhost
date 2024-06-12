@@ -1,21 +1,17 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Generate VirtualHost configuration file (Apache 2v2/2v4) &#8212; gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    <title>AVR project skeleton generator &#8212; gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=514cf933" />
     
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/documentation_options.js?v=914811f5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -28,10 +24,13 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="modules.html" title="gen_vhost"
              accesskey="N">next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Generate VirtualHost configuration file (Apache 2v2/2v4)</a></li> 
+        <li class="nav-item nav-item-this"><a href="">AVR project skeleton generator</a></li> 
       </ul>
     </div>  
 
@@ -40,74 +39,68 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="generate-virtualhost-configuration-file-apache-2v2-2v4">
-<h1>Generate VirtualHost configuration file (Apache 2v2/2v4)<a class="headerlink" href="#generate-virtualhost-configuration-file-apache-2v2-2v4" title="Permalink to this heading">¶</a></h1>
-<p><strong>gen_vhost</strong> is toolset for generation virtual host configuration file.</p>
+  <section id="avr-project-skeleton-generator">
+<h1>AVR project skeleton generator<a class="headerlink" href="#avr-project-skeleton-generator" title="Link to this heading">¶</a></h1>
+<p><strong>gen_vhost</strong> is toolset for generation of apache virtual host skeleton for
+development embedded applications.</p>
 <p>Developed in <a class="reference external" href="https://www.python.org/">python</a> code.</p>
-<p>The README is used to introduce the modules and provide instructions on
-how to install the modules, any machine dependencies it may have and any
+<p>The README is used to introduce the tool modules and provide instructions on
+how to install the tool modules, any machine dependencies it may have and any
 other information that should be provided before the modules are installed.</p>
-<p><a class="reference external" href="https://github.com/vroncevic/gen_vhost/workflows/Python%20package%20gen_vhost/badge.svg?branch=master"><img alt="Python package" src="https://github.com/vroncevic/gen_vhost/workflows/Python%20package%20gen_vhost/badge.svg" /></a> <a class="reference external" href="https://github.com/vroncevic/gen_vhost/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/vroncevic/gen_vhost.svg" /></a> <a class="reference external" href="https://gen_vhost.readthedocs.io/projects/gen_vhost/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/gen_vhost/badge/?version=latest" /></a> <a class="reference external" href="https://github.com/vroncevic/gen_vhost/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/vroncevic/gen_vhost.svg" /></a></p>
+<p><a class="reference external" href="https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python_checker.yml"><img alt="gen_vhost python checker" src="https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python_checker.yml/badge.svg" /></a> <a class="reference external" href="https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_package.yml"><img alt="gen_vhost python package" src="https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_package_checker.yml/badge.svg" /></a> <a class="reference external" href="https://github.com/vroncevic/gen_vhost/issues"><img alt="github issues" src="https://img.shields.io/github/issues/vroncevic/gen_vhost.svg" /></a> <a class="reference external" href="https://gen-vhost.readthedocs.io/en/latest/?badge=latest"><img alt="documentation status" src="https://readthedocs.org/projects/gen-vhost/badge/?version=latest" /></a> <a class="reference external" href="https://github.com/vroncevic/gen_vhost/graphs/contributors"><img alt="github contributors" src="https://img.shields.io/github/contributors/vroncevic/gen_vhost.svg" /></a></p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Generate VirtualHost configuration file (Apache 2v2/2v4)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">gen_vhost</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="gen_vhost.html">gen_vhost package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="gen_vhost.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="gen_vhost.pro.html">gen_vhost.pro package</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="gen_vhost.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gen_vhost.html#module-gen_vhost">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gen_vhost.html#gen_vhost.GenVHost"><code class="docutils literal notranslate"><span class="pre">GenVHost</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AVR project skeleton generator</a></li>
 </ul>
 </div>
-</section>
 <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
-<p><a class="reference external" href="https://github.com/vroncevic/gen_vhost/workflows/Install%20Python2%20Package%20gen_vhost/badge.svg?branch=master"><img alt="Install Python2 Package" src="https://github.com/vroncevic/gen_vhost/workflows/Install%20Python2%20Package%20gen_vhost/badge.svg" /></a> <a class="reference external" href="https://github.com/vroncevic/gen_vhost/workflows/Install%20Python3%20Package%20gen_vhost/badge.svg?branch=master"><img alt="Install Python3 Package" src="https://github.com/vroncevic/gen_vhost/workflows/Install%20Python3%20Package%20gen_vhost/badge.svg" /></a></p>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python3_build.yml"><img alt="gen_vhost python3 build" src="https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python3_build.yml/badge.svg" /></a></p>
 <p>Navigate to release <a class="reference external" href="https://github.com/vroncevic/gen_vhost/releases">page</a> download and extract release archive.</p>
-<p>To install this set of modules type the following</p>
+<p>To install <strong>gen_vhost</strong> type the following</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>xvzf<span class="w"> </span>gen_vhost-x.y.z.tar.gz
-<span class="nb">cd</span><span class="w"> </span>gen_vhost-x.y.z
-<span class="c1">#python2</span>
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-python<span class="w"> </span>setup.py<span class="w"> </span>install_lib
-python<span class="w"> </span>setup.py<span class="w"> </span>install_egg_info
-python<span class="w"> </span>setup.py<span class="w"> </span>install_data
+<span class="nb">cd</span><span class="w"> </span>gen_vhost-x.y.z/
 <span class="c1">#python3</span>
-pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 python3<span class="w"> </span>setup.py<span class="w"> </span>install_lib
-python3<span class="w"> </span>setup.py<span class="w"> </span>install_egg_info
 python3<span class="w"> </span>setup.py<span class="w"> </span>install_data
+python3<span class="w"> </span>setup.py<span class="w"> </span>install_egg_info
 </pre></div>
 </div>
 <p>You can use Docker to create image/container, or You can use pip to install</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#python2</span>
-pip<span class="w"> </span>install<span class="w"> </span>gen_vhost
-<span class="c1">#python3</span>
-pip3<span class="w"> </span>install<span class="w"> </span>gen_vhost
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#python3</span>
+pip3<span class="w"> </span>install<span class="w"> </span>gen-vhost
 </pre></div>
 </div>
-<p><a class="reference external" href="https://github.com/vroncevic/gen_vhost/actions?query=workflow%3A%22gen_vhost+docker+checker%22"><img alt="GitHub docker checker" src="https://github.com/vroncevic/gen_vhost/workflows/gen_vhost%20docker%20checker/badge.svg" /></a></p>
 </section>
 <section id="dependencies">
-<h1>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h1>
-<p><strong>gen_vhost</strong> requires next modules and libraries</p>
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h2>
+<p><strong>gen_vhost</strong> tool-module requires other modules and libraries</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pypi.org/project/ats-utilities/">ats-utilities - Python App/Tool/Script Utilities</a></p></li>
 </ul>
 </section>
 <section id="tool-structure">
-<h1>Tool structure<a class="headerlink" href="#tool-structure" title="Permalink to this heading">¶</a></h1>
-<p><strong>gen_vhost</strong> is based on OOP</p>
-<p>Code structure</p>
+<h2>Tool structure<a class="headerlink" href="#tool-structure" title="Link to this heading">¶</a></h2>
+<p><strong>gen_vhost</strong> is based on Template mechanism</p>
+<p>Generator structure</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gen_vhost/
 ├──<span class="w"> </span>conf/
-│<span class="w">   </span>├──<span class="w"> </span>gen_vhost.logo
+│<span class="w">   </span>├──<span class="w"> </span>gen_vhost.logo
 │<span class="w">   </span>├──<span class="w"> </span>gen_vhost.cfg
 │<span class="w">   </span>├──<span class="w"> </span>gen_vhost_util.cfg
 │<span class="w">   </span>├──<span class="w"> </span>project.yaml
@@ -130,23 +123,24 @@ pip3<span class="w"> </span>install<span class="w"> </span>gen_vhost
 </div>
 </section>
 <section id="copyright-and-licence">
-<h1>Copyright and licence<a class="headerlink" href="#copyright-and-licence" title="Permalink to this heading">¶</a></h1>
-<p><a class="reference external" href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
-<p>Copyright (C) 2017 by <a class="reference external" href="https://vroncevic.github.io/gen_vhost">vroncevic.github.io/gen_vhost</a></p>
+<h2>Copyright and licence<a class="headerlink" href="#copyright-and-licence" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.gnu.org/licenses/gpl-3.0"><img alt="license: gpl v3" src="https://img.shields.io/badge/license-gplv3-blue.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/apache-2.0"><img alt="license: apache 2.0" src="https://img.shields.io/badge/license-apache%202.0-blue.svg" /></a></p>
+<p>Copyright (C) 2017 - 2024 by <a class="reference external" href="https://vroncevic.github.io/gen_vhost">vroncevic.github.io/gen_vhost</a></p>
 <p><strong>gen_vhost</strong> is free software; you can redistribute it and/or modify
-it under the same terms as Python itself, either Python version 2.x/3.x or,
+it under the same terms as Python itself, either Python version 3.x or,
 at your option, any later version of Python 3 you may have available.</p>
 <p>Lets help and support PSF.</p>
-<p><a class="reference external" href="https://www.python.org/psf/"><img alt="Python Software Foundation" src="https://raw.githubusercontent.com/vroncevic/gen_vhost/dev/docs/psf-logo-alpha.png" /></a></p>
-<p><a class="reference external" href="https://psfmember.org/index.php?q=civicrm/contribute/transact&amp;reset=1&amp;id=2"><img alt="Donate" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" /></a></p>
+<p><a class="reference external" href="https://www.python.org/psf/"><img alt="python software foundation" src="https://raw.githubusercontent.com/vroncevic/gen_vhost/dev/docs/psf-logo-alpha.png" /></a></p>
+<p><a class="reference external" href="https://www.python.org/psf/donations/"><img alt="donate" src="https://www.paypalobjects.com/en_us/i/btn/btn_donatecc_lg.gif" /></a></p>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</section>
 </section>
 
 
@@ -159,12 +153,14 @@ at your option, any later version of Python 3 you may have available.</p>
   <div>
     <h3><a href="#">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Generate VirtualHost configuration file (Apache 2v2/2v4)</a></li>
+<li><a class="reference internal" href="#">AVR project skeleton generator</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#tool-structure">Tool structure</a></li>
 <li><a class="reference internal" href="#copyright-and-licence">Copyright and licence</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
 </ul>
 
   </div>
@@ -201,15 +197,18 @@ at your option, any later version of Python 3 you may have available.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="modules.html" title="gen_vhost"
              >next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Generate VirtualHost configuration file (Apache 2v2/2v4)</a></li> 
+        <li class="nav-item nav-item-this"><a href="">AVR project skeleton generator</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Vladimir Roncevic &lt;elektron.ronca@gmail.com&gt;.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    &#169; Copyright 2024, Vladimir Roncevic &lt;elektron.ronca@gmail.com&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

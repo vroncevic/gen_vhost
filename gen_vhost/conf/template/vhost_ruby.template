@@ -1,12 +1,12 @@
-<VirtualHost $ports>
-    ServerName $server_name
+<VirtualHost ${PORTS}>
+    ServerName ${SERVER_NAME}
     ServerAlias redmine
-    DocumentRoot $root_doc
-    ServerAdmin $admin_email
+    DocumentRoot ${ROOT_DOC}
+    ServerAdmin ${ADMIN_EMAIL}
     RailsBaseURI /
     RailsEnv production
     PassengerMaxPoolSize 4
-    <Directory $target_dir>
+    <Directory ${TARGET_DIR}>
         Options FollowSymLinks
         AllowOverride None
         Order allow,deny
