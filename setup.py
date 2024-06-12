@@ -5,7 +5,7 @@
 Module
     setup.py
 Copyright
-    Copyright (C) 2017 - 2024 - 2024 Vladimir Roncevic <elektron.ronca@gmail.com>
+    Copyright (C) 2017 - 2024 Vladimir Roncevic <elektron.ronca@gmail.com>
     gen_vhost is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by the
     Free Software Foundation, either version 3 of the License, or
@@ -29,7 +29,7 @@ __author__ = 'Vladimir Roncevic'
 __copyright__ = '(C) 2017, https://vroncevic.github.io/gen_vhost'
 __credits__: List[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__ = '1.1.2'
+__version__ = '1.1.3'
 __maintainer__ = 'Vladimir Roncevic'
 __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
@@ -61,7 +61,7 @@ APPROVED_LICENSES: List[str] = [
 PYP_CLASSIFIERS: List[str] = SUPPORTED_PY_VERSIONS + APPROVED_LICENSES
 setup(
     name='gen_vhost',
-    version='1.1.2',
+    version='1.1.3',
     description='VirtualHost generator',
     author='Vladimir Roncevic',
     author_email='elektron.ronca@gmail.com',

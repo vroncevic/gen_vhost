@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   gen_vhost
-# @version v1.1.2
+# @version v1.1.3
 # @date    Wed Jun 12 10:16:34 PM CEST 2024
 # @company None, free software to use 2024
 # @author  Vladimir Roncevic <elektron.ronca@gmail.com>
