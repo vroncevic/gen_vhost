@@ -1,100 +1,88 @@
-Generate VirtualHost configuration file (Apache 2v2/2v4)
----------------------------------------------------------
+AVR project skeleton generator
+===============================
 
-**gen_vhost** is toolset for generation virtual host configuration file.
+**gen_vhost** is toolset for generation of apache virtual host skeleton for
+development embedded applications.
 
 Developed in `python <https://www.python.org/>`_ code.
 
-The README is used to introduce the modules and provide instructions on
-how to install the modules, any machine dependencies it may have and any
+The README is used to introduce the tool modules and provide instructions on
+how to install the tool modules, any machine dependencies it may have and any
 other information that should be provided before the modules are installed.
 
-|Python package| |GitHub issues| |Documentation Status| |GitHub contributors|
+|gen_vhost python checker| |gen_vhost python package| |github issues| |documentation status| |github contributors|
 
-.. |Python package| image:: https://github.com/vroncevic/gen_vhost/workflows/Python%20package%20gen_vhost/badge.svg
-   :target: https://github.com/vroncevic/gen_vhost/workflows/Python%20package%20gen_vhost/badge.svg?branch=master
+.. |gen_vhost python checker| image:: https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python_checker.yml/badge.svg
+   :target: https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python_checker.yml
 
-.. |GitHub issues| image:: https://img.shields.io/github/issues/vroncevic/gen_vhost.svg
+.. |gen_vhost python package| image:: https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_package_checker.yml/badge.svg
+   :target: https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_package.yml
+
+.. |github issues| image:: https://img.shields.io/github/issues/vroncevic/gen_vhost.svg
    :target: https://github.com/vroncevic/gen_vhost/issues
 
-.. |GitHub contributors| image:: https://img.shields.io/github/contributors/vroncevic/gen_vhost.svg
+.. |github contributors| image:: https://img.shields.io/github/contributors/vroncevic/gen_vhost.svg
    :target: https://github.com/vroncevic/gen_vhost/graphs/contributors
 
-.. |Documentation Status| image:: https://readthedocs.org/projects/gen_vhost/badge/?version=latest
-   :target: https://gen_vhost.readthedocs.io/projects/gen_vhost/en/latest/?badge=latest
+.. |documentation status| image:: https://readthedocs.org/projects/gen-vhost/badge/?version=latest
+   :target: https://gen-vhost.readthedocs.io/en/latest/?badge=latest
 
 .. toctree::
    :maxdepth: 4
    :caption: Contents
 
-   self
    modules
+   self
 
 Installation
 -------------
 
-|Install Python2 Package| |Install Python3 Package|
+|gen_vhost python3 build|
 
-.. |Install Python2 Package| image:: https://github.com/vroncevic/gen_vhost/workflows/Install%20Python2%20Package%20gen_vhost/badge.svg
-   :target: https://github.com/vroncevic/gen_vhost/workflows/Install%20Python2%20Package%20gen_vhost/badge.svg?branch=master
-
-.. |Install Python3 Package| image:: https://github.com/vroncevic/gen_vhost/workflows/Install%20Python3%20Package%20gen_vhost/badge.svg
-   :target: https://github.com/vroncevic/gen_vhost/workflows/Install%20Python3%20Package%20gen_vhost/badge.svg?branch=master
+.. |gen_vhost python3 build| image:: https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python3_build.yml/badge.svg
+   :target: https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python3_build.yml
 
 Navigate to release `page`_ download and extract release archive.
 
 .. _page: https://github.com/vroncevic/gen_vhost/releases
 
-To install this set of modules type the following
+To install **gen_vhost** type the following
 
 .. code-block:: bash
 
     tar xvzf gen_vhost-x.y.z.tar.gz
-    cd gen_vhost-x.y.z
-    #python2
-    pip install -r requirements.txt
-    python setup.py install_lib
-    python setup.py install_egg_info
-    python setup.py install_data
+    cd gen_vhost-x.y.z/
     #python3
-    pip3 install -r requirements.txt
     python3 setup.py install_lib
-    python3 setup.py install_egg_info
     python3 setup.py install_data
+    python3 setup.py install_egg_info
 
 You can use Docker to create image/container, or You can use pip to install
 
 .. code-block:: bash
 
-    #python2
-    pip install gen_vhost
     #python3
-    pip3 install gen_vhost
-
-|GitHub docker checker|
-
-.. |GitHub docker checker| image:: https://github.com/vroncevic/gen_vhost/workflows/gen_vhost%20docker%20checker/badge.svg
-   :target: https://github.com/vroncevic/gen_vhost/actions?query=workflow%3A%22gen_vhost+docker+checker%22
+    pip3 install gen-vhost
 
 Dependencies
 -------------
 
-**gen_vhost** requires next modules and libraries
+**gen_vhost** tool-module requires other modules and libraries
 
 * `ats-utilities - Python App/Tool/Script Utilities <https://pypi.org/project/ats-utilities/>`_
 
 Tool structure
-------------------
+---------------
 
-**gen_vhost** is based on OOP
+**gen_vhost** is based on Template mechanism
 
-Code structure
+Generator structure
 
 .. code-block:: bash
 
     gen_vhost/
     ├── conf/
-    │   ├── gen_vhost.logo
+    │   ├── gen_vhost.logo
     │   ├── gen_vhost.cfg
     │   ├── gen_vhost_util.cfg
     │   ├── project.yaml
@@ -117,31 +105,31 @@ Code structure
 Copyright and licence
 ----------------------
 
-|License: GPL v3| |License: Apache 2.0|
+|license: gpl v3| |license: apache 2.0|
 
-.. |License: GPL v3| image:: https://img.shields.io/badge/License-GPLv3-blue.svg
+.. |license: gpl v3| image:: https://img.shields.io/badge/license-gplv3-blue.svg
    :target: https://www.gnu.org/licenses/gpl-3.0
 
-.. |License: Apache 2.0| image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
-   :target: https://opensource.org/licenses/Apache-2.0
+.. |license: apache 2.0| image:: https://img.shields.io/badge/license-apache%202.0-blue.svg
+   :target: https://opensource.org/licenses/apache-2.0
 
-Copyright (C) 2017 by `vroncevic.github.io/gen_vhost <https://vroncevic.github.io/gen_vhost>`_
+Copyright (C) 2017 - 2024 by `vroncevic.github.io/gen_vhost <https://vroncevic.github.io/gen_vhost>`_
 
 **gen_vhost** is free software; you can redistribute it and/or modify
-it under the same terms as Python itself, either Python version 2.x/3.x or,
+it under the same terms as Python itself, either Python version 3.x or,
 at your option, any later version of Python 3 you may have available.
 
 Lets help and support PSF.
 
-|Python Software Foundation|
+|python software foundation|
 
-.. |Python Software Foundation| image:: https://raw.githubusercontent.com/vroncevic/gen_vhost/dev/docs/psf-logo-alpha.png
+.. |python software foundation| image:: https://raw.githubusercontent.com/vroncevic/gen_vhost/dev/docs/psf-logo-alpha.png
    :target: https://www.python.org/psf/
 
-|Donate|
+|donate|
 
-.. |Donate| image:: https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif
-   :target: https://psfmember.org/index.php?q=civicrm/contribute/transact&reset=1&id=2
+.. |donate| image:: https://www.paypalobjects.com/en_us/i/btn/btn_donatecc_lg.gif
+   :target: https://www.python.org/psf/donations/
 
 Indices and tables
 ------------------

@@ -1,7 +1,7 @@
-<VirtualHost $ports>
-    DocumentRoot $root_doc
-    ServerName $server_name
-    Alias $url $target_dir
-    ServerAdmin $admin_email
+<VirtualHost ${PORTS}>
+    DocumentRoot ${ROOT_DOC}
+    ServerName ${SERVER_NAME}
+    Alias ${URL} ${TARGET_DIR}
+    ServerAdmin ${ADMIN_EMAIL}
 </VirtualHost>
 

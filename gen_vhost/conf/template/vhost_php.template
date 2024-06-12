@@ -1,10 +1,10 @@
-<VirtualHost $ports>
-    ServerName $server_name
-    DocumentRoot $root_doc
-    ServerAdmin $admin_email
+<VirtualHost ${PORTS}>
+    ServerName ${SERVER_NAME}
+    DocumentRoot ${ROOT_DOC}
+    ServerAdmin ${ADMIN_EMAIL}
     AddHandler cgi-script .php
-    Alias $url $target_dir
-    <Directory $target_dir>
+    Alias ${URL} ${TARGET_DIR}
+    <Directory ${TARGET_DIR}>
         Options +ExecCGI +Includes +FollowSymlinks
         AllowOverride All
     </Directory>

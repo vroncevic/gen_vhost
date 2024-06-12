@@ -1,5 +1,5 @@
 gen_vhost
-=========
+==========
 
 .. toctree::
    :maxdepth: 4

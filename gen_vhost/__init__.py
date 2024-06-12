@@ -1,195 +1,188 @@
 # -*- coding: UTF-8 -*-
 
 '''
- Module
-     __init__.py
- Copyright
-     Copyright (C) 2017 Vladimir Roncevic <elektron.ronca@gmail.com>
-     gen_vhost is free software: you can redistribute it and/or modify it
-     under the terms of the GNU General Public License as published by the
-     Free Software Foundation, either version 3 of the License, or
-     (at your option) any later version.
-     gen_vhost is distributed in the hope that it will be useful, but
-     WITHOUT ANY WARRANTY; without even the implied warranty of
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     See the GNU General Public License for more details.
-     You should have received a copy of the GNU General Public License along
-     with this program. If not, see <http://www.gnu.org/licenses/>.
- Info
-     Defined class GenVHost with attribute(s) and method(s).
-     Load a base info, create an CLI interface and run operation(s).
+Module
+    __init__.py
+Copyright
+    Copyright (C) 2017 - 2024 Vladimir Roncevic <elektron.ronca@gmail.com>
+    gen_vhost is free software: you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    gen_vhost is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License along
+    with this program. If not, see <http://www.gnu.org/licenses/>.
+Info
+    Defines class GenVHost with attribute(s) and method(s).
+    Loads a base info, creates a CLI interface and run operation(s).
 '''
 
 import sys
+from typing import Any, List, Dict
 from os.path import exists, dirname, realpath
+from os import getcwd
+from argparse import Namespace
 
 try:
-    from six import add_metaclass
-    from gen_vhost.pro import VHost
     from ats_utilities.splash import Splash
     from ats_utilities.logging import ATSLogger
     from ats_utilities.cli.cfg_cli import CfgCLI
-    from ats_utilities.cooperative import CooperativeMeta
     from ats_utilities.console_io.error import error_message
     from ats_utilities.console_io.verbose import verbose_message
     from ats_utilities.console_io.success import success_message
+    from ats_utilities.exceptions.ats_type_error import ATSTypeError
+    from ats_utilities.exceptions.ats_value_error import ATSValueError
+    from gen_vhost.pro import VHost
 except ImportError as ats_error_message:
-    MESSAGE = '\n{0}\n{1}\n'.format(__file__, ats_error_message)
-    sys.exit(MESSAGE)  # Force close python ATS ##############################
+    # Force close python ATS ##################################################
+    sys.exit(f'\n{__file__}\n{ats_error_message}\n')
 
 __author__ = 'Vladimir Roncevic'
-__copyright__ = 'Copyright 2017, https://vroncevic.github.io/gen_vhost'
-__credits__ = ['Vladimir Roncevic']
+__copyright__ = '(C) 2024, https://vroncevic.github.io/gen_vhost'
+__credits__: List[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 __maintainer__ = 'Vladimir Roncevic'
 __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
 
 
-@add_metaclass(CooperativeMeta)
 class GenVHost(CfgCLI):
     '''
-        Defined class GenVHost with attribute(s) and method(s).
-        Load a base info, create an CLI interface and run operation(s).
+        Defines class GenVHost with attribute(s) and method(s).
+        Loads a base info, creates a CLI interface and run operation(s).
+
         It defines:
 
             :attributes:
-                | GEN_VERBOSE - console text indicator for process-phase.
-                | CONFIG - configuration file path.
-                | LOG - tool log file path.
-                | LOGO - logo for splash screen.
-                | OPS - list of tool options.
-                | logger - logger object API.
+                | _GEN_VERBOSE - Console text indicator for process-phase.
+                | _CONFIG - Tool info file path.
+                | _LOG - Tool log file path.
+                | _LOGO - Logo for splash screen.
+                | _OPS - List of tool options.
+                | _logger - Logger object API.
             :methods:
-                | __init__ - initial constructor.
-                | process - process and run tool option(s).
-                | __str__ - dunder method for GenVHost.
+                | __init__ - Initials GenVHost constructor.
+                | process - Processes and runs tool operation.
     '''
 
-    GEN_VERBOSE = 'GEN_VHOST'
-    CONFIG = '/conf/gen_vhost.cfg'
-    LOG = '/log/gen_vhost.log'
-    LOGO = '/conf/gen_vhost.logo'
-    OPS = ['-g', '--gen', '-v', '--verbose', '--version']
+    _GEN_VERBOSE: str = 'GEN_VHOST'
+    _CONFIG: str = '/conf/gen_vhost.cfg'
+    _LOG: str = '/log/gen_vhost.log'
+    _LOGO: str = '/conf/gen_vhost.logo'
+    _OPS: List[str] = ['-n', '--name', '-t', '--type', '-v', '--verbose']
 
-    def __init__(self, verbose=False):
+    def __init__(self, verbose: bool = False) -> None:
         '''
-            Initial constructor.
+            Initials GenVHost constructor.
 
-            :param verbose: enable/disable verbose option.
+            :param verbose: Enable/Disable verbose option
             :type verbose: <bool>
             :exceptions: None
         '''
-        current_dir = dirname(realpath(__file__))
-        gen_vhost_property = {
+        current_dir: str = dirname(realpath(__file__))
+        gen_vhost_property: Dict[str, str | bool] = {
             'ats_organization': 'vroncevic',
-            'ats_repository': 'gen_vhost',
-            'ats_name': 'gen_vhost',
-            'ats_logo_path': '{0}{1}'.format(current_dir, GenVHost.LOGO),
+            'ats_repository': f'{self._GEN_VERBOSE.lower()}',
+            'ats_name': f'{self._GEN_VERBOSE.lower()}',
+            'ats_logo_path': f'{current_dir}{self._LOGO}',
             'ats_use_github_infrastructure': True
         }
-        splash = Splash(gen_vhost_property, verbose=verbose)
-        base_info = '{0}{1}'.format(current_dir, GenVHost.CONFIG)
-        CfgCLI.__init__(self, base_info, verbose=verbose)
-        verbose_message(GenVHost.GEN_VERBOSE, verbose, 'init tool info')
-        self.logger = ATSLogger(
-            GenVHost.GEN_VERBOSE.lower(),
-            '{0}{1}'.format(current_dir, GenVHost.LOG),
-            verbose=verbose
+        Splash(gen_vhost_property, verbose)
+        base_info: str = f'{current_dir}{self._CONFIG}'
+        super().__init__(base_info, verbose)
+        verbose_message(
+            verbose, [f'{self._GEN_VERBOSE.lower()} init tool info']
+        )
+        self._logger: ATSLogger = ATSLogger(
+            self._GEN_VERBOSE.lower(), f'{current_dir}{self._LOG}', verbose
         )
         if self.tool_operational:
             self.add_new_option(
-                GenVHost.OPS[0], GenVHost.OPS[1],
-                dest='gen', help='generate virtual host module'
+                self._OPS[0], self._OPS[1], dest='name',
+                help='generate apache virtual host skeleton (provide name)'
             )
             self.add_new_option(
-                GenVHost.OPS[2], GenVHost.OPS[3],
+                self._OPS[2], self._OPS[3], dest='type',
+                help='module type (perl | php | python | ruby | static)'
+            )
+            self.add_new_option(
+                self._OPS[4], self._OPS[5],
                 action='store_true', default=False,
                 help='activate verbose mode for generation'
             )
-            self.add_new_option(
-                GenVHost.OPS[4], action='version', version=__version__
-            )
 
-    def process(self, verbose=False):
+    def process(self, verbose: bool = False) -> bool:
         '''
-            Process and run operation.
+            Processes and runs tool operation.
 
-            :param verbose: enable/disable verbose option.
+            :param verbose: Enable/Disable verbose option
             :type verbose: <bool>
-            :return: boolean status, True (success) | False.
+            :return: True (success operation) | False
             :rtype: <bool>
             :exceptions: None
         '''
-        status = False
+        status: bool = False
         if self.tool_operational:
-            num_of_args_sys = len(sys.argv)
-            if num_of_args_sys > 1:
-                operation = sys.argv[1]
-                if operation not in GenVHost.OPS:
-                    sys.argv.append('-h')
-            else:
-                sys.argv.append('-h')
-            args = self.parse_args(sys.argv[1:])
-            pro_exists = exists(getattr(args, 'gen'))
-            if not pro_exists:
-                if bool(getattr(args, 'gen')):
-                    generator = VHost(
-                        verbose=getattr(args, 'verbose') or verbose
-                    )
-                    print(
-                        '{0} {1} [{2}]'.format(
-                            '[{0}]'.format(GenVHost.GEN_VERBOSE.lower()),
-                            'generating virtual host module',
-                            getattr(args, 'gen')
-                        )
-                    )
-                    status = generator.gen_vh_module(
-                        '{0}'.format(getattr(args, 'gen')),
-                        verbose=getattr(args, 'verbose') or verbose
-                    )
-                    if status:
-                        success_message(GenVHost.GEN_VERBOSE, 'done\n')
-                        self.logger.write_log(
-                            '{0} {1} done'.format(
-                                'generating project', getattr(args, 'gen')
-                            ), ATSLogger.ATS_INFO
-                        )
-                    else:
-                        error_message(
-                            GenVHost.GEN_VERBOSE, 'generation failed'
-                        )
-                        self.logger.write_log(
-                            'generation failed', ATSLogger.ATS_ERROR
-                        )
-                else:
+            try:
+                args: Any | Namespace = self.parse_args(sys.argv)
+                if not bool(getattr(args, "name")):
                     error_message(
-                        GenVHost.GEN_VERBOSE, 'provide project name'
+                        [f'{self._GEN_VERBOSE.lower()} missing name argument']
                     )
-                    self.logger.write_log(
-                        'provide project name', ATSLogger.ATS_ERROR
+                    return status
+                if not bool(getattr(args, "type")):
+                    error_message(
+                        [f'{self._GEN_VERBOSE.lower()} missing type argument']
                     )
-            else:
-                error_message(GenVHost.GEN_VERBOSE, 'project already exist')
-                self.logger.write_log(
-                    'project already exist', ATSLogger.ATS_ERROR
+                    return status
+                if exists(f'{getcwd()}/{str(getattr(args, "name"))}'):
+                    error_message([
+                        f'{self._GEN_VERBOSE.lower()}',
+                        f'project with name [{getattr(args, "name")}] exists'
+                    ])
+                    return status
+                gen: VHost = VHost(getattr(args, 'verbose') or verbose)
+                try:
+                    print(
+                        " ".join([
+                            f'[{self._GEN_VERBOSE.lower()}]',
+                            'generate virtual host skeleton',
+                            str(getattr(args, 'name'))
+                        ])
+                    )
+                    status: bool = gen.gen_vh_module(
+                        str(getattr(args, "name")),
+                        f'{getattr(args, "type")}',
+                        getattr(args, 'verbose') or verbose
+                    )
+                except (ATSTypeError, ATSValueError) as e:
+                    error_message([f'{self._GEN_VERBOSE.lower()} {str(e)}'])
+                    self._logger.write_log(f'{str(e)}', self._logger.ATS_ERROR)
+                if status:
+                    success_message([f'{self._GEN_VERBOSE.lower()} done\n'])
+                    self._logger.write_log(
+                        f'generation {getattr(args, "name")} done',
+                        self._logger.ATS_INFO
+                    )
+                else:
+                    error_message([f'{self._GEN_VERBOSE.lower()} failed'])
+                    self._logger.write_log(
+                        'generation failed', self._logger.ATS_ERROR
+                    )
+            except SystemExit:
+                error_message(
+                    [f'{self._GEN_VERBOSE.lower()} expected argument -n']
                 )
+                return status
         else:
-            error_message(GenVHost.GEN_VERBOSE, 'tool is not operational')
-            self.logger.write_log(
-                'tool is not operational', ATSLogger.ATS_ERROR
+            error_message(
+                [f'{self._GEN_VERBOSE.lower()} tool is not operational']
+            )
+            self._logger.write_log(
+                'tool is not operational', self._logger.ATS_ERROR
             )
         return status
-
-    def __str__(self):
-        '''
-            Dunder method for GenVHost.
-
-            :return: object in a human-readable format.
-            :rtype: <str>
-            :exceptions: None
-        '''
-        return '{0} ({1}, {2})'.format(
-            self.__class__.__name__, CfgCLI.__str__(self), str(self.logger)
-        )
