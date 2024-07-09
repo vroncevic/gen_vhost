@@ -16,12 +16,12 @@ Copyright
     You should have received a copy of the GNU General Public License along
     with this program. If not, see <http://www.gnu.org/licenses/>.
 Info
-    Defined class WriteTemplate with atribute(s) and method(s).
+    Defines class WriteTemplate with atribute(s) and method(s).
     Creates an API for write a template content with parameters to a file.
 '''
 
 import sys
-from typing import List, Dict
+from typing import List, Dict, Optional
 from os import getcwd, chmod, mkdir
 from string import Template
 
@@ -38,7 +38,7 @@ __author__ = 'Vladimir Roncevic'
 __copyright__ = '(C) 2024, https://vroncevic.github.io/gen_vhost'
 __credits__: List[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__ = '1.1.3'
+__version__ = '1.1.4'
 __maintainer__ = 'Vladimir Roncevic'
 __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
@@ -74,7 +74,7 @@ class WriteTemplate(FileCheck):
     def write(
         self,
         template_content: Dict[str, str],
-        pro_name: str | None,
+        pro_name: Optional[str],
         verbose: bool = False
     ) -> bool:
         '''
@@ -83,15 +83,15 @@ class WriteTemplate(FileCheck):
             :param template_content: Template content
             :type template_content: <Dict[str, str]>
             :param pro_name: Project name | None
-            :type pro_name: <str> | <NoneType>
+            :type pro_name: <Optional[str]>
             :param verbose: Enable/Disable verbose option
             :type verbose: <bool>
             :return: True (success operation) | False
             :rtype: <bool>
             :exception: ATSTypeError | ATSValueError
         '''
-        error_msg: str | None = None
-        error_id: int | None = None
+        error_msg: Optional[str] = None
+        error_id: Optional[int] = None
         error_msg, error_id = self.check_params([
             ('dict:template_content', template_content),
             ('str:pro_name', pro_name)

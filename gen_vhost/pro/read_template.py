@@ -16,12 +16,12 @@ Copyright
     You should have received a copy of the GNU General Public License along
     with this program. If not, see <http://www.gnu.org/licenses/>.
 Info
-    Defined class ReadTemplate with attribute(s) and method(s).
+    Defines class ReadTemplate with attribute(s) and method(s).
     Creates an API for reading a PY MODULE template.
 '''
 
 import sys
-from typing import Any, List, Dict
+from typing import Any, List, Dict, Optional
 from os.path import dirname, realpath
 
 try:
@@ -37,7 +37,7 @@ __author__ = 'Vladimir Roncevic'
 __copyright__ = '(C) 2024, https://vroncevic.github.io/gen_form_model'
 __credits__: List[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__ = '1.1.3'
+__version__ = '1.1.4'
 __maintainer__ = 'Vladimir Roncevic'
 __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
@@ -75,7 +75,7 @@ class ReadTemplate(FileCheck):
     def read(
         self,
         config: Dict[Any, Any],
-        pro_type: str | None,
+        pro_type: Optional[str],
         verbose: bool = False
     ) -> Dict[str, str]:
         '''
@@ -84,15 +84,15 @@ class ReadTemplate(FileCheck):
             :param config: Project configuration
             :type config: <Dict[Any, Any]>
             :param pro_type: Project type | None
-            :type pro_type: <str> | <NoneType>
+            :type pro_type: <Optional[str]>
             :param verbose: Enable/Disable verbose option
             :type verbose: <bool>
             :return: Loaded templates
             :rtype: <Dict[str, str]>
             :exceptions: ATSTypeError | ATSValueError
         '''
-        error_msg: str | None = None
-        error_id: int | None = None
+        error_msg: Optional[str] = None
+        error_id: Optional[int] = None
         error_msg, error_id = self.check_params([
             ('dict:config', config),
             ('str:pro_type', pro_type)

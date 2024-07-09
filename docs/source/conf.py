@@ -29,7 +29,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 project: str = 'gen_vhost'
 project_copyright: str = '2024, Vladimir Roncevic <elektron.ronca@gmail.com>'
 author: str = 'Vladimir Roncevic <elektron.ronca@gmail.com>'
-version: str = '1.1.3'
+version: str = '1.1.4'
 release: str = 'https://github.com/vroncevic/gen_vhost/releases'
 extensions: List[str] = [
     'sphinx.ext.autodoc', 'sphinx.ext.doctest',
