@@ -23,6 +23,7 @@ other information that should be provided before the modules are installed.
     - [Install using docker](#install-using-docker)
 - [Dependencies](#dependencies)
 - [Tool structure](#tool-structure)
+- [Code coverage](#code-coverage)
 - [Docs](#docs)
 - [Contributing](#contributing)
 - [Copyright and Licence](#copyright-and-licence)
@@ -109,28 +110,41 @@ You can use Dockerfile to create image/container.
 Generator structure
 
 ```bash
-gen_vhost/
-├── conf/
-│   ├── gen_vhost.logo
-│   ├── gen_vhost.cfg
-│   ├── gen_vhost_util.cfg
-│   ├── project.yaml
-│   └── template/
-│       ├── vhost_perl.template
-│       ├── vhost_php.template
-│       ├── vhost_python.template
-│       ├── vhost_ruby.template
-│       └── vhost_static.template
-├── __init__.py
-├── log/
-│   └── gen_vhost.log
-├── pro/
-│   ├── __init__.py
-│   ├── read_template.py
-│   └── write_template.py
-└── run/
-    └── gen_vhost_run.py
+    gen_vhost/
+        ├── conf/
+        │   ├── gen_vhost.cfg
+        │   ├── gen_vhost.logo
+        │   ├── gen_vhost_util.cfg
+        │   ├── project.yaml
+        │   └── template/
+        │       ├── vhost_perl.template
+        │       ├── vhost_php.template
+        │       ├── vhost_python.template
+        │       ├── vhost_ruby.template
+        │       └── vhost_static.template
+        ├── __init__.py
+        ├── log/
+        │   └── gen_vhost.log
+        ├── pro/
+        │   ├── __init__.py
+        │   ├── read_template.py
+        │   └── write_template.py
+        ├── py.typed
+        └── run/
+            └── gen_vhost_run.py
+
+    6 directories, 16 files
 ```
+
+### Code coverage
+
+| Name | Stmts | Miss | Cover |
+|------|-------|------|-------|
+| `gen_vhost/__init__.py` | 75 | 14 | 81% |
+| `gen_vhost/pro/__init__.py` | 62 | 7 | 89% |
+| `gen_vhost/pro/read_template.py` | 50 | 6 | 88% |
+| `gen_vhost/pro/write_template.py` | 50 | 5 | 90% |
+| **Total** | 237 | 32 | 86% |
 
 ### Docs
 
