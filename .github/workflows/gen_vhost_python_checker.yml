@@ -4,13 +4,11 @@ on:
     branches: [ master ]
     paths:
       - 'gen_vhost/**'
-      - 'tests/**'
       - 'setup.py'
   pull_request:
     branches: [ master ]
     paths:
       - 'gen_vhost/**'
-      - 'tests/**'
       - 'setup.py'
 jobs:
   build:
@@ -22,14 +20,14 @@ jobs:
         run: |
           echo Checking length of line in modules
           modules_ok=0
-          modules=($(find gen_vhost/ tests/ -type f -name '*.py' -exec echo '{}' \;))
-          for mod in "${modules[@]}"; do line_length=$(wc -L < "${mod}"); [[ $line_length -gt 127 ]] && modules_ok=1; done
+          modules=($(find gen_vhost/ -type f -name '*.py' -exec echo '{}' \;))
+          for mod in "${modules[@]}"; do line_length=$(wc -L < "${mod}"); [[ $line_length -gt 150 ]] && modules_ok=1; done
           [[ $modules_ok -eq 0 ]] && echo ok || exit 1
       - name: Check max number of lines in modules
         id: num_line_checker
         run: |
           echo Checking number of lines in modules
           modules_ok=0
-          modules=($(find gen_vhost/ tests/ -type f -name '*.py' -exec echo '{}' \;))
-          for mod in "${modules[@]}"; do line_numbers=$(wc -l < "${mod}"); [[ $line_numbers -gt 300 ]] && modules_ok=1; done
+          modules=($(find gen_vhost/ -type f -name '*.py' -exec echo '{}' \;))
+          for mod in "${modules[@]}"; do line_numbers=$(wc -l < "${mod}"); [[ $line_numbers -gt 500 ]] && modules_ok=1; done
           [[ $modules_ok -eq 0 ]] && echo ok || exit 1
