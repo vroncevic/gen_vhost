@@ -54,13 +54,21 @@ other information that should be provided before the modules are installed.</p>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">gen_vhost</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="gen_vhost.html">gen_vhost package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="gen_vhost.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="gen_vhost.pro.html">gen_vhost.pro package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_vhost.application.html">gen_vhost.application package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_vhost.domain.html">gen_vhost.domain package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_vhost.infrastructure.html">gen_vhost.infrastructure package</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="gen_vhost.html#module-gen_vhost">Module contents</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="gen_vhost.html#gen_vhost.GenVHost"><code class="docutils literal notranslate"><span class="pre">GenVHost</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gen_vhost.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gen_vhost.engine.html">gen_vhost.engine module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_vhost.gen_vhost_bundle.html">gen_vhost.gen_vhost_bundle module</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="gen_vhost.html#module-gen_vhost">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="main.html#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -99,26 +107,60 @@ pip3<span class="w"> </span>install<span class="w"> </span>gen-vhost
 <p><strong>gen_vhost</strong> is based on Template mechanism</p>
 <p>Generator structure</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gen_vhost/
-├──<span class="w"> </span>conf/
-│<span class="w">   </span>├──<span class="w"> </span>gen_vhost.logo
-│<span class="w">   </span>├──<span class="w"> </span>gen_vhost.cfg
-│<span class="w">   </span>├──<span class="w"> </span>gen_vhost_util.cfg
-│<span class="w">   </span>├──<span class="w"> </span>project.yaml
-│<span class="w">   </span>└──<span class="w"> </span>template/
-│<span class="w">       </span>├──<span class="w"> </span>vhost_perl.template
-│<span class="w">       </span>├──<span class="w"> </span>vhost_php.template
-│<span class="w">       </span>├──<span class="w"> </span>vhost_python.template
-│<span class="w">       </span>├──<span class="w"> </span>vhost_ruby.template
-│<span class="w">       </span>└──<span class="w"> </span>vhost_static.template
-├──<span class="w"> </span>__init__.py
-├──<span class="w"> </span>log/
-│<span class="w">   </span>└──<span class="w"> </span>gen_vhost.log
-├──<span class="w"> </span>pro/
-│<span class="w">   </span>├──<span class="w"> </span>__init__.py
-│<span class="w">   </span>├──<span class="w"> </span>read_template.py
-│<span class="w">   </span>└──<span class="w"> </span>write_template.py
-└──<span class="w"> </span>run/
-<span class="w">    </span>└──<span class="w"> </span>gen_vhost_run.py
+<span class="w">     </span>├──<span class="w"> </span>application/
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>__init__.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>service.py
+<span class="w">     </span>│<span class="w">   </span>└──<span class="w"> </span>service_bundle.py
+<span class="w">     </span>├──<span class="w"> </span>domain/
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>__init__.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>models.py
+<span class="w">     </span>│<span class="w">   </span>└──<span class="w"> </span>ports/
+<span class="w">     </span>│<span class="w">       </span>├──<span class="w"> </span>ifile_gen.py
+<span class="w">     </span>│<span class="w">       </span>├──<span class="w"> </span>ifile_writer.py
+<span class="w">     </span>│<span class="w">       </span>├──<span class="w"> </span>__init__.py
+<span class="w">     </span>│<span class="w">       </span>└──<span class="w"> </span>itemplate_provider.py
+<span class="w">     </span>├──<span class="w"> </span>engine.py
+<span class="w">     </span>├──<span class="w"> </span>gen_vhost_bundle.py
+<span class="w">     </span>├──<span class="w"> </span>infrastructure/
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>cli.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>cli_bundle.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>config/
+<span class="w">     </span>│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>gen_vhost.cfg
+<span class="w">     </span>│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>gen_vhost.logo
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>file_writer.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>gen_vhost_command.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>icli.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>icli_command.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>__init__.py
+<span class="w">     </span>│<span class="w">   </span>├──<span class="w"> </span>template_provider.py
+<span class="w">     </span>│<span class="w">   </span>└──<span class="w"> </span>templates/
+<span class="w">     </span>│<span class="w">       </span>├──<span class="w"> </span>vhost_perl.template
+<span class="w">     </span>│<span class="w">       </span>├──<span class="w"> </span>vhost_php.template
+<span class="w">     </span>│<span class="w">       </span>├──<span class="w"> </span>vhost_python.template
+<span class="w">     </span>│<span class="w">       </span>├──<span class="w"> </span>vhost_ruby.template
+<span class="w">     </span>│<span class="w">       </span>└──<span class="w"> </span>vhost_static.template
+<span class="w">     </span>└──<span class="w"> </span>__init__.py
+
+<span class="w"> </span><span class="m">7</span><span class="w"> </span>directories,<span class="w"> </span><span class="m">27</span><span class="w"> </span>files
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>Install package</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3<span class="w"> </span>install<span class="w"> </span>gen-vhost
+</pre></div>
+</div>
+<p>Prepare main entry point by downloading <a class="reference external" href="https://raw.githubusercontent.com/vroncevic/gen_vhost/master/main.py">main.py</a> or create your own.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>main.py<span class="w"> </span>https://raw.githubusercontent.com/vroncevic/gen_vhost/master/main.py
+</pre></div>
+</div>
+<p>Running tool for creating virtual host configuration files</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>main.py<span class="w"> </span>generate-vhost<span class="w"> </span>--filename<span class="w"> </span><span class="s2">&quot;vhost_static.conf&quot;</span><span class="w"> </span>--type<span class="w"> </span><span class="s2">&quot;static&quot;</span><span class="w"> </span>--domain-name<span class="w"> </span><span class="s2">&quot;static.vhost.com&quot;</span><span class="w"> </span>--app-dir<span class="w"> </span><span class="s2">&quot;/var/www/static&quot;</span><span class="w"> </span>--log-dir<span class="w"> </span><span class="s2">&quot;/var/log/static&quot;</span><span class="w"> </span>--admin-email<span class="w"> </span><span class="s2">&quot;admin@vhost.com&quot;</span>
+python3<span class="w"> </span>main.py<span class="w"> </span>generate-vhost<span class="w"> </span>--filename<span class="w"> </span><span class="s2">&quot;vhost_ruby.conf&quot;</span><span class="w"> </span>--type<span class="w"> </span><span class="s2">&quot;ruby&quot;</span><span class="w"> </span>--domain-name<span class="w"> </span><span class="s2">&quot;ruby.vhost.com&quot;</span><span class="w"> </span>--app-dir<span class="w"> </span><span class="s2">&quot;/var/www/ruby&quot;</span><span class="w"> </span>--log-dir<span class="w"> </span><span class="s2">&quot;/var/log/ruby&quot;</span><span class="w"> </span>--admin-email<span class="w"> </span><span class="s2">&quot;admin@vhost.com&quot;</span>
+python3<span class="w"> </span>main.py<span class="w"> </span>generate-vhost<span class="w"> </span>--filename<span class="w"> </span><span class="s2">&quot;vhost_python.conf&quot;</span><span class="w"> </span>--type<span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="w"> </span>--domain-name<span class="w"> </span><span class="s2">&quot;python.vhost.com&quot;</span><span class="w"> </span>--app-dir<span class="w"> </span><span class="s2">&quot;/var/www/python&quot;</span><span class="w"> </span>--log-dir<span class="w"> </span><span class="s2">&quot;/var/log/python&quot;</span><span class="w"> </span>--admin-email<span class="w"> </span><span class="s2">&quot;admin@vhost.com&quot;</span>
+python3<span class="w"> </span>main.py<span class="w"> </span>generate-vhost<span class="w"> </span>--filename<span class="w"> </span><span class="s2">&quot;vhost_php.conf&quot;</span><span class="w"> </span>--type<span class="w"> </span><span class="s2">&quot;php&quot;</span><span class="w"> </span>--domain-name<span class="w"> </span><span class="s2">&quot;php.vhost.com&quot;</span><span class="w"> </span>--app-dir<span class="w"> </span><span class="s2">&quot;/var/www/php&quot;</span><span class="w"> </span>--log-dir<span class="w"> </span><span class="s2">&quot;/var/log/php&quot;</span><span class="w"> </span>--admin-email<span class="w"> </span><span class="s2">&quot;admin@vhost.com&quot;</span>
+python3<span class="w"> </span>main.py<span class="w"> </span>generate-vhost<span class="w"> </span>--filename<span class="w"> </span><span class="s2">&quot;vhost_perl.conf&quot;</span><span class="w"> </span>--type<span class="w"> </span><span class="s2">&quot;perl&quot;</span><span class="w"> </span>--domain-name<span class="w"> </span><span class="s2">&quot;perl.vhost.com&quot;</span><span class="w"> </span>--app-dir<span class="w"> </span><span class="s2">&quot;/var/www/perl&quot;</span><span class="w"> </span>--log-dir<span class="w"> </span><span class="s2">&quot;/var/log/perl&quot;</span><span class="w"> </span>--admin-email<span class="w"> </span><span class="s2">&quot;admin@vhost.com&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -157,6 +199,7 @@ at your option, any later version of Python 3 you may have available.</p>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#tool-structure">Tool structure</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#copyright-and-licence">Copyright and licence</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>

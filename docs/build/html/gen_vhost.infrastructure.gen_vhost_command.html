@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>gen_vhost.infrastructure.gen_vhost_command module &#8212; gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=514cf933" />
+    
+    <script src="_static/documentation_options.js?v=914811f5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="gen_vhost.infrastructure.icli module" href="gen_vhost.infrastructure.icli.html" />
+    <link rel="prev" title="gen_vhost.infrastructure.file_writer module" href="gen_vhost.infrastructure.file_writer.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gen_vhost.infrastructure.icli.html" title="gen_vhost.infrastructure.icli module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gen_vhost.infrastructure.file_writer.html" title="gen_vhost.infrastructure.file_writer module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >gen_vhost</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="gen_vhost.html" >gen_vhost package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="gen_vhost.infrastructure.html" accesskey="U">gen_vhost.infrastructure package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">gen_vhost.infrastructure.gen_vhost_command module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-gen_vhost.infrastructure.gen_vhost_command">
+<span id="gen-vhost-infrastructure-gen-vhost-command-module"></span><h1>gen_vhost.infrastructure.gen_vhost_command module<a class="headerlink" href="#module-gen_vhost.infrastructure.gen_vhost_command" title="Link to this heading">¶</a></h1>
+<dl class="simple">
+<dt>Module</dt><dd><p>gen_vhost_command.py</p>
+</dd>
+<dt>Copyright</dt><dd><p>Copyright (C) 2026 Vladimir Roncevic &lt;<a class="reference external" href="mailto:elektron&#46;ronca&#37;&#52;&#48;gmail&#46;com">elektron<span>&#46;</span>ronca<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;
+gen_vhost is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+gen_vhost is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along
+with this program. If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
+</dd>
+<dt>Info</dt><dd><p>Defines GenVhostCommand class implementing ICLICommand strategy.</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gen_vhost.infrastructure.gen_vhost_command.</span></span><span class="sig-name descname"><span class="pre">GenVHostCommand</span></span><a class="reference internal" href="_modules/gen_vhost/infrastructure/gen_vhost_command.html#GenVHostCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="gen_vhost.infrastructure.icli_command.html#gen_vhost.infrastructure.icli_command.ICLICommand" title="gen_vhost.infrastructure.icli_command.ICLICommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ICLICommand</span></code></a></p>
+<p>CLI subcommand for generating virtual host files.</p>
+<p>It defines:</p>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+<dt class="field-even">methods<span class="colon">:</span></dt>
+<dd class="field-even"><div class="line-block">
+<div class="line">name - Returns the command name key.</div>
+<div class="line">help_text - Returns the command help text.</div>
+<div class="line">options - Returns the command options.</div>
+<div class="line">execute - Executes the configuration file generation logic.</div>
+<div class="line">__str__ - Returns GenVHostCommand instance as string representation.</div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand._abc_impl">
+<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand._abc_impl" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gen_vhost.domain.ports.ifile_gen.html#gen_vhost.domain.ports.ifile_gen.IFileGen" title="gen_vhost.domain.ports.ifile_gen.IFileGen"><span class="pre">IFileGen</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gen_vhost/infrastructure/gen_vhost_command.html#GenVHostCommand.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.execute" title="Link to this definition">¶</a></dt>
+<dd><p>Executes the configuration file generation logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>&lt;dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>&gt;</em>) – Subcommand parameters from CLI parser.</p></li>
+<li><p><strong>service</strong> (<em>&lt;IFileGen&gt;</em>) – Generation orchestrator service instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Return code, stdout and stderr messages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>&lt;dict[str, Any]&gt;</p>
+</dd>
+<dt class="field-even">Exceptions<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.help_text">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">help_text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.help_text" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the command help text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The command help text.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>&lt;str&gt;</p>
+</dd>
+<dt class="field-odd">Exceptions<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.name" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the command name key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The command name key.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>&lt;str&gt;</p>
+</dd>
+<dt class="field-odd">Exceptions<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.options">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">options</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">CommandOption</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.options" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the command options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of command options.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>&lt;List[CommandOption]&gt;</p>
+</dd>
+<dt class="field-odd">Exceptions<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">gen_vhost.infrastructure.gen_vhost_command module</a><ul>
+<li><a class="reference internal" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand"><code class="docutils literal notranslate"><span class="pre">GenVHostCommand</span></code></a><ul>
+<li><a class="reference internal" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand._abc_impl"><code class="docutils literal notranslate"><span class="pre">GenVHostCommand._abc_impl</span></code></a></li>
+<li><a class="reference internal" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.execute"><code class="docutils literal notranslate"><span class="pre">GenVHostCommand.execute()</span></code></a></li>
+<li><a class="reference internal" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.help_text"><code class="docutils literal notranslate"><span class="pre">GenVHostCommand.help_text</span></code></a></li>
+<li><a class="reference internal" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.name"><code class="docutils literal notranslate"><span class="pre">GenVHostCommand.name</span></code></a></li>
+<li><a class="reference internal" href="#gen_vhost.infrastructure.gen_vhost_command.GenVHostCommand.options"><code class="docutils literal notranslate"><span class="pre">GenVHostCommand.options</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="gen_vhost.infrastructure.file_writer.html"
+                          title="previous chapter">gen_vhost.infrastructure.file_writer module</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="gen_vhost.infrastructure.icli.html"
+                          title="next chapter">gen_vhost.infrastructure.icli module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/gen_vhost.infrastructure.gen_vhost_command.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gen_vhost.infrastructure.icli.html" title="gen_vhost.infrastructure.icli module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gen_vhost.infrastructure.file_writer.html" title="gen_vhost.infrastructure.file_writer module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >gen_vhost</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="gen_vhost.html" >gen_vhost package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="gen_vhost.infrastructure.html" >gen_vhost.infrastructure package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">gen_vhost.infrastructure.gen_vhost_command module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, Vladimir Roncevic &lt;elektron.ronca@gmail.com&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>

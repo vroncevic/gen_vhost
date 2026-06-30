@@ -24,6 +24,7 @@ other information that should be provided before the modules are installed.
 - [Dependencies](#dependencies)
 - [Tool structure](#tool-structure)
 - [Code coverage](#code-coverage)
+- [Usage](#usage)
 - [Docs](#docs)
 - [Contributing](#contributing)
 - [Copyright and Licence](#copyright-and-licence)
@@ -109,42 +110,104 @@ You can use Dockerfile to create image/container.
 
 Generator structure
 
+<details>
+<summary><b>Click to expand framework structure</b></summary>
+
 ```bash
     gen_vhost/
-        ├── conf/
-        │   ├── gen_vhost.cfg
-        │   ├── gen_vhost.logo
-        │   ├── gen_vhost_util.cfg
-        │   ├── project.yaml
-        │   └── template/
-        │       ├── vhost_perl.template
-        │       ├── vhost_php.template
-        │       ├── vhost_python.template
-        │       ├── vhost_ruby.template
-        │       └── vhost_static.template
-        ├── __init__.py
-        ├── log/
-        │   └── gen_vhost.log
-        ├── pro/
-        │   ├── __init__.py
-        │   ├── read_template.py
-        │   └── write_template.py
-        ├── py.typed
-        └── run/
-            └── gen_vhost_run.py
+         ├── application/
+         │   ├── __init__.py
+         │   ├── service.py
+         │   └── service_bundle.py
+         ├── domain/
+         │   ├── __init__.py
+         │   ├── models.py
+         │   └── ports/
+         │       ├── ifile_gen.py
+         │       ├── ifile_writer.py
+         │       ├── __init__.py
+         │       └── itemplate_provider.py
+         ├── engine.py
+         ├── gen_vhost_bundle.py
+         ├── infrastructure/
+         │   ├── cli.py
+         │   ├── cli_bundle.py
+         │   ├── config/
+         │   │   ├── gen_vhost.cfg
+         │   │   └── gen_vhost.logo
+         │   ├── file_writer.py
+         │   ├── gen_vhost_command.py
+         │   ├── icli.py
+         │   ├── icli_command.py
+         │   ├── __init__.py
+         │   ├── template_provider.py
+         │   └── templates/
+         │       ├── vhost_perl.template
+         │       ├── vhost_php.template
+         │       ├── vhost_python.template
+         │       ├── vhost_ruby.template
+         │       └── vhost_static.template
+         └── __init__.py
 
-    6 directories, 16 files
+     7 directories, 27 files
 ```
+</details>
 
 ### Code coverage
 
+<details>
+<summary><b>Click to expand code coverage</b></summary>
+
 | Name | Stmts | Miss | Cover |
 |------|-------|------|-------|
-| `gen_vhost/__init__.py` | 73 | 12 | 84%|
-| `gen_vhost/pro/__init__.py` | 60 | 5 | 92%|
-| `gen_vhost/pro/read_template.py` | 48 | 4 | 92%|
-| `gen_vhost/pro/write_template.py` | 48 | 3 | 94%|
-| **Total** | 229 | 24 | 90% |
+| `gen_vhost/__init__.py` | 8 | 0 | 100%|
+| `gen_vhost/application/__init__.py` | 8 | 0 | 100%|
+| `gen_vhost/application/service.py` | 35 | 0 | 100%|
+| `gen_vhost/application/service_bundle.py` | 29 | 0 | 100%|
+| `gen_vhost/domain/__init__.py` | 8 | 0 | 100%|
+| `gen_vhost/domain/models.py` | 21 | 0 | 100%|
+| `gen_vhost/domain/ports/__init__.py` | 8 | 0 | 100%|
+| `gen_vhost/domain/ports/ifile_gen.py` | 11 | 0 | 100%|
+| `gen_vhost/domain/ports/ifile_writer.py` | 10 | 0 | 100%|
+| `gen_vhost/domain/ports/itemplate_provider.py` | 10 | 0 | 100%|
+| `gen_vhost/engine.py` | 64 | 0 | 100%|
+| `gen_vhost/gen_vhost_bundle.py` | 41 | 0 | 100%|
+| `gen_vhost/infrastructure/__init__.py` | 8 | 0 | 100%|
+| `gen_vhost/infrastructure/cli.py` | 36 | 0 | 100%|
+| `gen_vhost/infrastructure/cli_bundle.py` | 33 | 0 | 100%|
+| `gen_vhost/infrastructure/file_writer.py` | 30 | 0 | 100%|
+| `gen_vhost/infrastructure/gen_vhost_command.py` | 35 | 0 | 100%|
+| `gen_vhost/infrastructure/icli.py` | 11 | 0 | 100%|
+| `gen_vhost/infrastructure/icli_command.py` | 14 | 0 | 100%|
+| `gen_vhost/infrastructure/template_provider.py` | 29 | 0 | 100%|
+| **Total** | 449 | 0 | 100% |
+
+</details>
+
+### Usage
+
+Install package
+
+```bash
+pip3 install gen-vhost
+```
+
+Prepare main entry point by downloading [main.py](https://raw.githubusercontent.com/vroncevic/gen_vhost/master/main.py) or create your own.
+
+
+```bash
+wget -O main.py https://raw.githubusercontent.com/vroncevic/gen_vhost/master/main.py
+```
+
+Running tool for creating virtual host configuration files
+
+```bash
+python3 main.py generate-vhost --filename "vhost_static.conf" --type "static" --domain-name "static.vhost.com" --app-dir "/var/www/static" --log-dir "/var/log/static" --admin-email "admin@vhost.com"
+python3 main.py generate-vhost --filename "vhost_ruby.conf" --type "ruby" --domain-name "ruby.vhost.com" --app-dir "/var/www/ruby" --log-dir "/var/log/ruby" --admin-email "admin@vhost.com"
+python3 main.py generate-vhost --filename "vhost_python.conf" --type "python" --domain-name "python.vhost.com" --app-dir "/var/www/python" --log-dir "/var/log/python" --admin-email "admin@vhost.com"
+python3 main.py generate-vhost --filename "vhost_php.conf" --type "php" --domain-name "php.vhost.com" --app-dir "/var/www/php" --log-dir "/var/log/php" --admin-email "admin@vhost.com"
+python3 main.py generate-vhost --filename "vhost_perl.conf" --type "perl" --domain-name "perl.vhost.com" --app-dir "/var/www/perl" --log-dir "/var/log/perl" --admin-email "admin@vhost.com"
+```
 
 ### Docs
 

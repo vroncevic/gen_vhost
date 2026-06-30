@@ -81,26 +81,66 @@ Generator structure
 .. code-block:: bash
 
     gen_vhost/
-    ├── conf/
-    │   ├── gen_vhost.logo
-    │   ├── gen_vhost.cfg
-    │   ├── gen_vhost_util.cfg
-    │   ├── project.yaml
-    │   └── template/
-    │       ├── vhost_perl.template
-    │       ├── vhost_php.template
-    │       ├── vhost_python.template
-    │       ├── vhost_ruby.template
-    │       └── vhost_static.template
-    ├── __init__.py
-    ├── log/
-    │   └── gen_vhost.log
-    ├── pro/
-    │   ├── __init__.py
-    │   ├── read_template.py
-    │   └── write_template.py
-    └── run/
-        └── gen_vhost_run.py
+         ├── application/
+         │   ├── __init__.py
+         │   ├── service.py
+         │   └── service_bundle.py
+         ├── domain/
+         │   ├── __init__.py
+         │   ├── models.py
+         │   └── ports/
+         │       ├── ifile_gen.py
+         │       ├── ifile_writer.py
+         │       ├── __init__.py
+         │       └── itemplate_provider.py
+         ├── engine.py
+         ├── gen_vhost_bundle.py
+         ├── infrastructure/
+         │   ├── cli.py
+         │   ├── cli_bundle.py
+         │   ├── config/
+         │   │   ├── gen_vhost.cfg
+         │   │   └── gen_vhost.logo
+         │   ├── file_writer.py
+         │   ├── gen_vhost_command.py
+         │   ├── icli.py
+         │   ├── icli_command.py
+         │   ├── __init__.py
+         │   ├── template_provider.py
+         │   └── templates/
+         │       ├── vhost_perl.template
+         │       ├── vhost_php.template
+         │       ├── vhost_python.template
+         │       ├── vhost_ruby.template
+         │       └── vhost_static.template
+         └── __init__.py
+
+     7 directories, 27 files
+
+Usage
+-----
+
+Install package
+
+.. code-block:: bash
+
+    pip3 install gen-vhost
+
+Prepare main entry point by downloading `main.py <https://raw.githubusercontent.com/vroncevic/gen_vhost/master/main.py>`_ or create your own.
+
+.. code-block:: bash
+
+    wget -O main.py https://raw.githubusercontent.com/vroncevic/gen_vhost/master/main.py
+
+Running tool for creating virtual host configuration files
+
+.. code-block:: bash
+
+    python3 main.py generate-vhost --filename "vhost_static.conf" --type "static" --domain-name "static.vhost.com" --app-dir "/var/www/static" --log-dir "/var/log/static" --admin-email "admin@vhost.com"
+    python3 main.py generate-vhost --filename "vhost_ruby.conf" --type "ruby" --domain-name "ruby.vhost.com" --app-dir "/var/www/ruby" --log-dir "/var/log/ruby" --admin-email "admin@vhost.com"
+    python3 main.py generate-vhost --filename "vhost_python.conf" --type "python" --domain-name "python.vhost.com" --app-dir "/var/www/python" --log-dir "/var/log/python" --admin-email "admin@vhost.com"
+    python3 main.py generate-vhost --filename "vhost_php.conf" --type "php" --domain-name "php.vhost.com" --app-dir "/var/www/php" --log-dir "/var/log/php" --admin-email "admin@vhost.com"
+    python3 main.py generate-vhost --filename "vhost_perl.conf" --type "perl" --domain-name "perl.vhost.com" --app-dir "/var/www/perl" --log-dir "/var/log/perl" --admin-email "admin@vhost.com"
 
 Copyright and licence
 ----------------------
