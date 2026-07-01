@@ -58,8 +58,6 @@
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">override</span>
-<span class="kn">from</span> <span class="nn">ats_utilities.factory_class</span> <span class="kn">import</span> <span class="n">format_instance_to_string</span>
-<span class="kn">from</span> <span class="nn">ats_utilities.exceptions.ats_value_error</span> <span class="kn">import</span> <span class="n">ATSValueError</span>
 <span class="kn">from</span> <span class="nn">gen_vhost.domain.ports.ifile_gen</span> <span class="kn">import</span> <span class="n">IFileGen</span>
 <span class="kn">from</span> <span class="nn">gen_vhost.application.service_bundle</span> <span class="kn">import</span> <span class="n">ServiceBundle</span>
 <span class="kn">from</span> <span class="nn">gen_vhost.domain.ports.itemplate_provider</span> <span class="kn">import</span> <span class="n">ITemplateProvider</span>
@@ -70,7 +68,7 @@
 <span class="n">__copyright__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;(C) 2026, https://vroncevic.github.io/gen_vhost&#39;</span>
 <span class="n">__credits__</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Vladimir Roncevic&#39;</span><span class="p">,</span> <span class="s1">&#39;Python Software Foundation&#39;</span><span class="p">]</span>
 <span class="n">__license__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE&#39;</span>
-<span class="n">__version__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;1.1.6&#39;</span>
+<span class="n">__version__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;1.1.7&#39;</span>
 <span class="n">__maintainer__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Vladimir Roncevic&#39;</span>
 <span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;elektron.ronca@gmail.com&#39;</span>
 <span class="n">__status__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
@@ -90,7 +88,6 @@
 <span class="sd">            :methods:</span>
 <span class="sd">                | execute - Generates and writes user files.</span>
 <span class="sd">                | is_initialized - Checks if the file generator component is initialized.</span>
-<span class="sd">                | __str__ - Returns the file generator as string representation.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component_bundle</span><span class="p">:</span> <span class="n">ServiceBundle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -100,10 +97,10 @@
 <span class="sd">            :param component_bundle: Bundle containing template provider and file writer.</span>
 <span class="sd">            :type component_bundle: &lt;ServiceBundle&gt;</span>
 <span class="sd">            :exceptions:</span>
-<span class="sd">                | ATSValueError: Component bundle (ServiceBundle) cannot be None or invalid.</span>
+<span class="sd">                | ValueError: Component bundle (ServiceBundle) cannot be None or invalid.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">component_bundle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ATSValueError</span><span class="p">(</span><span class="s1">&#39;component bundle (ServiceBundle) cannot be None.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;component bundle (ServiceBundle) cannot be None.&#39;</span><span class="p">)</span>
 
         <span class="n">component_bundle</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_template_provider</span><span class="p">:</span> <span class="n">ITemplateProvider</span> <span class="o">=</span> <span class="n">component_bundle</span><span class="o">.</span><span class="n">template_provider</span>
@@ -156,18 +153,7 @@
 <span class="sd">            :exceptions: None.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="kc">True</span></div>
-
-
-    <span class="nd">@override</span>
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">            Returns the file generator as string representation.</span>
-
-<span class="sd">            :return: The file generator as string representation.</span>
-<span class="sd">            :rtype: &lt;str&gt;</span>
-<span class="sd">            :exceptions: None.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">format_instance_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+</div>
 
 </pre></div>
 

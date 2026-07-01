@@ -28,7 +28,7 @@ __author__: str = 'Vladimir Roncevic'
 __copyright__: str = '(C) 2026, https://vroncevic.github.io/gen_vhost'
 __credits__: list[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__: str = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__: str = '1.1.6'
+__version__: str = '1.1.7'
 __maintainer__: str = 'Vladimir Roncevic'
 __email__: str = 'elektron.ronca@gmail.com'
 __status__: str = 'Updated'
@@ -67,7 +67,7 @@ def find_package_data(pkg: str) -> list[str]:
 
 setup(
     name='gen_vhost',
-    version='1.1.6',
+    version='1.1.7',
     description='VirtualHost generator',
     author='Vladimir Roncevic',
     author_email='elektron.ronca@gmail.com',

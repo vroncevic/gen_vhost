@@ -147,9 +147,10 @@ Generator structure
          │       ├── vhost_python.template
          │       ├── vhost_ruby.template
          │       └── vhost_static.template
-         └── __init__.py
+         ├── __init__.py
+         └── py.typed
 
-     7 directories, 27 files
+     7 directories, 28 files
 ```
 </details>
 
@@ -162,15 +163,15 @@ Generator structure
 |------|-------|------|-------|
 | `gen_vhost/__init__.py` | 8 | 0 | 100%|
 | `gen_vhost/application/__init__.py` | 8 | 0 | 100%|
-| `gen_vhost/application/service.py` | 35 | 0 | 100%|
-| `gen_vhost/application/service_bundle.py` | 29 | 0 | 100%|
+| `gen_vhost/application/service.py` | 30 | 0 | 100%|
+| `gen_vhost/application/service_bundle.py` | 28 | 0 | 100%|
 | `gen_vhost/domain/__init__.py` | 8 | 0 | 100%|
 | `gen_vhost/domain/models.py` | 21 | 0 | 100%|
 | `gen_vhost/domain/ports/__init__.py` | 8 | 0 | 100%|
 | `gen_vhost/domain/ports/ifile_gen.py` | 11 | 0 | 100%|
 | `gen_vhost/domain/ports/ifile_writer.py` | 10 | 0 | 100%|
 | `gen_vhost/domain/ports/itemplate_provider.py` | 10 | 0 | 100%|
-| `gen_vhost/engine.py` | 64 | 0 | 100%|
+| `gen_vhost/engine.py` | 69 | 0 | 100%|
 | `gen_vhost/gen_vhost_bundle.py` | 41 | 0 | 100%|
 | `gen_vhost/infrastructure/__init__.py` | 8 | 0 | 100%|
 | `gen_vhost/infrastructure/cli.py` | 36 | 0 | 100%|
@@ -180,7 +181,7 @@ Generator structure
 | `gen_vhost/infrastructure/icli.py` | 11 | 0 | 100%|
 | `gen_vhost/infrastructure/icli_command.py` | 14 | 0 | 100%|
 | `gen_vhost/infrastructure/template_provider.py` | 29 | 0 | 100%|
-| **Total** | 449 | 0 | 100% |
+| **Total** | 448 | 0 | 100% |
 
 </details>
 

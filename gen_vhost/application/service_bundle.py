@@ -21,7 +21,6 @@ Info
 
 from dataclasses import dataclass
 from typing import Any
-from ats_utilities.exceptions.ats_value_error import ATSValueError
 from gen_vhost.domain.ports.itemplate_provider import ITemplateProvider
 from gen_vhost.domain.ports.ifile_writer import IFileWriter
 
@@ -29,7 +28,7 @@ __author__: str = 'Vladimir Roncevic'
 __copyright__: str = '(C) 2026, https://vroncevic.github.io/gen_vhost'
 __credits__: list[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__: str = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__: str = '1.1.6'
+__version__: str = '1.1.7'
 __maintainer__: str = 'Vladimir Roncevic'
 __email__: str = 'elektron.ronca@gmail.com'
 __status__: str = 'Development'
@@ -59,14 +58,14 @@ class ServiceBundle:
             Validates that essential components are set.
 
             :exceptions:
-                | ATSValueError: Template provider must be provided.
-                | ATSValueError: File writer must be provided.
+                | ValueError: Template provider must be provided.
+                | ValueError: File writer must be provided.
         '''
         if self.template_provider is None:
-            raise ATSValueError('template provider must be provided.')
+            raise ValueError('template provider must be provided.')
 
         if self.file_writer is None:
-            raise ATSValueError("file writer must be provided.")
+            raise ValueError("file writer must be provided.")
 
     def merge(self, other: 'ServiceBundle') -> None:
         '''

@@ -39,7 +39,7 @@ __author__: str = 'Vladimir Roncevic'
 __copyright__: str = '(C) 2026, https://vroncevic.github.io/ats_coverage'
 __credits__: list[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__: str = 'https://github.com/vroncevic/ats_coverage/blob/dev/LICENSE'
-__version__: str = '1.1.6'
+__version__: str = '1.1.7'
 __maintainer__: str = 'Vladimir Roncevic'
 __email__: str = 'elektron.ronca@gmail.com'
 __status__: str = 'Updated'
@@ -345,7 +345,7 @@ def update_structure(pro_name: str) -> None:
 if __name__ == "__main__":
     cli: OptionManager = OptionManager(OptionComponentBundle(parameters={
         'description': 'ats_coverage 2025',
-        'version': '1.1.6',
+        'version': '1.1.7',
         'licence': 'GPLv3'
     }))
     cli.add_operation(
