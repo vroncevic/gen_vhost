@@ -34,7 +34,7 @@ __author__: str = 'Vladimir Roncevic'
 __copyright__: str = '(C) 2026, https://vroncevic.github.io/gen_vhost'
 __credits__: list[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__: str = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__: str = '1.1.6'
+__version__: str = '1.1.7'
 __maintainer__: str = 'Vladimir Roncevic'
 __email__: str = 'elektron.ronca@gmail.com'
 __status__: str = 'Development'
@@ -184,6 +184,36 @@ class TestEngine(unittest.TestCase):
 
                 engine.process()
                 mock_print.assert_called_with('\x1b[31m❌ gen_vhost: engine not initialized.\x1b[0m')
+
+    def test_process_unexpected_exception(self) -> None:
+        '''
+            Tests engine process catches unexpected exception.
+        '''
+        mock_cli: MagicMock = MagicMock(spec=ICLI)
+        mock_cli.is_initialized.return_value = True
+        mock_cli.run.side_effect = Exception("Unexpected error")
+
+        bundle: GenVhostBundle = GenVhostBundle(cli=mock_cli)
+        engine: GenVhost = GenVhost(bundle)
+        self.assertTrue(engine.is_initialized())
+
+        engine.process()
+        mock_cli.run.assert_called_once()
+
+    def test_process_expected_exception(self) -> None:
+        '''
+            Tests engine process catches expected exception.
+        '''
+        mock_cli: MagicMock = MagicMock(spec=ICLI)
+        mock_cli.is_initialized.return_value = True
+        mock_cli.run.side_effect = ATSValueError("Expected error")
+
+        bundle: GenVhostBundle = GenVhostBundle(cli=mock_cli)
+        engine: GenVhost = GenVhost(bundle)
+        self.assertTrue(engine.is_initialized())
+
+        engine.process()
+        mock_cli.run.assert_called_once()
 
     def test_gen_vhost_bundle_helpers(self) -> None:
         '''

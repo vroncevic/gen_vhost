@@ -26,7 +26,7 @@ __author__: str = 'Vladimir Roncevic'
 __copyright__: str = '(C) 2026, https://vroncevic.github.io/gen_vhost'
 __credits__: list[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__: str = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__: str = '1.1.6'
+__version__: str = '1.1.7'
 __maintainer__: str = 'Vladimir Roncevic'
 __email__: str = 'elektron.ronca@gmail.com'
 __status__: str = 'Development'
@@ -69,17 +69,6 @@ class IFileGen(ABC):
 
             :return: True (success) | False (fail).
             :rtype: <bool>
-            :exceptions: None.
-        '''
-        pass
-
-    @abstractmethod
-    def __str__(self) -> str:
-        '''
-            Returns the file generator as string representation.
-
-            :return: The file generator as string representation.
-            :rtype: <str>
             :exceptions: None.
         '''
         pass

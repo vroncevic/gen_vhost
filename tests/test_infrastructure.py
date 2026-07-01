@@ -43,7 +43,7 @@ __author__: str = 'Vladimir Roncevic'
 __copyright__: str = '(C) 2026, https://vroncevic.github.io/gen_vhost'
 __credits__: list[str] = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__: str = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__: str = '1.1.6'
+__version__: str = '1.1.7'
 __maintainer__: str = 'Vladimir Roncevic'
 __email__: str = 'elektron.ronca@gmail.com'
 __status__: str = 'Development'
@@ -155,7 +155,7 @@ class TestInfrastructure(unittest.TestCase):
         context: ContextBundle = ContextBundle(checker=Checker(), reporter=Reporter(), verbose=False)
         params: dict[str, str] = {
             'ats_name': 'test_cli',
-            'ats_version': '1.1.6',
+            'ats_version': '1.1.7',
             'ats_licence': 'MIT',
             'ats_build_date': '2026-06-22'
         }
