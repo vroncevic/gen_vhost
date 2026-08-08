@@ -2,7 +2,7 @@
 
 '''
 Module
-    main.py
+    isubprocessor.py
 Copyright
     Copyright (C) 2026 Vladimir Roncevic <elektron.ronca@gmail.com>
     gen_vhost is free software: you can redistribute it and/or modify it
@@ -16,15 +16,13 @@ Copyright
     You should have received a copy of the GNU General Public License along
     with this program. If not, see <http://www.gnu.org/licenses/>.
 Info
-    Main entry point for Task Code Generator CLI.
+    Defines the abstract interface for sub-process execution.
+    Provides an interface for the sub-process factory.
 '''
 
 from __future__ import annotations
 
-from sys import exit
-
-from gen_vhost.engine import GenVhost
-from gen_vhost.setup.factory import GenVhostBundleFactory
+from typing import Protocol, runtime_checkable
 
 __author__ = 'Vladimir Roncevic'
 __copyright__ = '(C) 2026, https://vroncevic.github.io/gen_vhost'
@@ -36,23 +34,32 @@ __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
 
 
-def main() -> bool:
+@runtime_checkable
+class ISubProcessor[SubProcessorParamsType, SubProcessorResultType](Protocol):
     '''
-        Bootstraps and runs the gen_vhost with required adapters.
+        Defines the abstract interface for sub-process execution.
+        Provides an interface for the sub-process factory.
 
-        :return: True if successful, False otherwise.
-        :exceptions: None
+        It defines:
+
+            :methods:
+                | run - Runs a sub-process.
+                | is_initialized - Checks if the subprocessor is initialized.
     '''
-    gen_vhost: GenVhost = GenVhost(GenVhostBundleFactory.create_bundle())
 
-    return gen_vhost.process()
+    def run(self,  *, params: SubProcessorParamsType) -> SubProcessorResultType:
+        '''
+            Runs a sub-process.
 
+            :param params: The parameters for the sub-process execution.
+            :return: The result of the execution.
+        '''
+        pass
 
-if __name__ == '__main__':
-    '''
-        Entry point for gen_vhost execution.
+    def is_initialized(self) -> bool:
+        '''
+            Checks if the service is initialized.
 
-        :exit code: 0 if successful, 1 otherwise.
-        :exceptions: None
-    '''
-    exit(0 if main() else 1)
+            :return: True if the subprocessor is initialized, False otherwise.
+        '''
+        pass

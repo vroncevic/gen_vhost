@@ -1,14 +1,13 @@
-Virtual Host configuration generator
-=====================================
+Create Vhost project skeleton
+----------------------------
 
-**gen_vhost** is toolset for generation of apache virtual host skeleton for
-development embedded applications.
+**gen_vhost** is tool for creating Vhost project skeleton.
 
 Developed in `python <https://www.python.org/>`_ code.
 
-The README is used to introduce the tool modules and provide instructions on
-how to install the tool modules, any machine dependencies it may have and any
-other information that should be provided before the modules are installed.
+The README is used to introduce the tool and provide instructions on
+how to install the tool, any machine dependencies it may have and any
+other information that should be provided before the tool is installed.
 
 |gen_vhost python checker| |gen_vhost python package| |github issues| |documentation status| |github contributors|
 
@@ -31,11 +30,11 @@ other information that should be provided before the modules are installed.
    :maxdepth: 4
    :caption: Contents
 
-   modules
    self
+   modules
 
-Installation
--------------
+🚀 Installation
+---------------
 
 |gen_vhost python3 build|
 
@@ -52,128 +51,157 @@ To install **gen_vhost** type the following
 
     tar xvzf gen_vhost-x.y.z.tar.gz
     cd gen_vhost-x.y.z/
-    #python3
-    python3 setup.py install_lib
-    python3 setup.py install_data
-    python3 setup.py install_egg_info
+    # python3
+    wget https://bootstrap.pypa.io/get-pip.py
+    python3 get-pip.py 
+    python3 -m pip install --upgrade setuptools
+    python3 -m pip install --upgrade pip
+    python3 -m pip install --upgrade build
+    pip3 install -r requirements.txt
+    python3 -m build --no-isolation --wheel
+    pip3 install ./dist/gen_vhost-*-py3-none-any.whl
+    rm -f get-pip.py
 
 You can use Docker to create image/container, or You can use pip to install
 
 .. code-block:: bash
 
-    #python3
-    pip3 install gen-vhost
+    # python3
+    pip3 install gen_vhost
 
-Dependencies
--------------
+📦 Dependencies
+---------------
 
-**gen_vhost** tool-module requires other modules and libraries
+**gen_vhost** requires next modules and libraries
 
 * `ats-utilities - Python App/Tool/Script Utilities <https://pypi.org/project/ats-utilities/>`_
 
+📁 Tool structure
+-----------------
+
+**gen_vhost** is based on OOP.
+
 Tool structure
----------------
-
-**gen_vhost** is based on Template mechanism
-
-Generator structure
 
 .. code-block:: bash
 
     gen_vhost/
-         ├── application/
+         ├── core/
          │   ├── __init__.py
-         │   ├── service.py
-         │   └── service_bundle.py
-         ├── domain/
-         │   ├── __init__.py
-         │   ├── models.py
-         │   └── ports/
-         │       ├── ifile_gen.py
-         │       ├── ifile_writer.py
+         │   ├── model/
+         │   │   ├── __init__.py
+         │   │   └── project_setup.py
+         │   └── service/
+         │       ├── engine.py
          │       ├── __init__.py
-         │       └── itemplate_provider.py
+         │       ├── iservice.py
+         │       └── isubprocessor.py
          ├── engine.py
-         ├── gen_vhost_bundle.py
          ├── infrastructure/
-         │   ├── cli.py
-         │   ├── cli_bundle.py
+         │   ├── cli/
+         │   │   ├── engine.py
+         │   │   ├── icli.py
+         │   │   ├── __init__.py
+         │   │   └── setup/
+         │   │       ├── bundle.py
+         │   │       ├── dep_validator.py
+         │   │       ├── dependencies.py
+         │   │       ├── factory.py
+         │   │       ├── __init__.py
+         │   │       ├── keys.py
+         │   │       ├── opt_validator.py
+         │   │       ├── options.py
+         │   │       ├── registry.py
+         │   │       └── validator.py
+         │   ├── command/
+         │   │   ├── command.py
+         │   │   ├── gen_vhost_command_definition.py
+         │   │   ├── gen_vhost_command_executor.py
+         │   │   ├── icommand_definition.py
+         │   │   ├── icommand_executor.py
+         │   │   └── __init__.py
          │   ├── config/
          │   │   ├── gen_vhost.cfg
-         │   │   └── gen_vhost.logo
-         │   ├── file_writer.py
-         │   ├── gen_vhost_command.py
-         │   ├── icli.py
-         │   ├── icli_command.py
+         │   │   ├── gen_vhost.logo
+         │   │   ├── scheme.json
+         │   │   └── templates.tgz
          │   ├── __init__.py
-         │   ├── template_provider.py
-         │   └── templates/
-         │       ├── vhost_perl.template
-         │       ├── vhost_php.template
-         │       ├── vhost_python.template
-         │       ├── vhost_ruby.template
-         │       └── vhost_static.template
-         └── __init__.py
+         │   └── subprocessor.py
+         ├── __init__.py
+         ├── py.typed
+         └── setup/
+             ├── bundle.py
+             ├── dep_validator.py
+             ├── dependencies.py
+             ├── factory.py
+             ├── __init__.py
+             ├── keys.py
+             ├── opt_validator.py
+             ├── options.py
+             ├── registry.py
+             └── validator.py
 
-     7 directories, 27 files
+     10 directories, 45 files
 
-Usage
------
+✨ Features
+-----------
+
+* Automatically scaffolds Virtual Host configuration files for Apache web server.
+* Provides a modular and extensible architecture based on OOP and SOLID principles.
+* Includes command line interface (CLI) support via a command/executor structure.
+* Robust validation of project bundles, dependencies, and options.
+* Comes with configurable templates and JSON schema definitions.
+* High code quality with full type checking and 100% unit test coverage.
+
+📊 Code coverage
+----------------
+
+.. csv-table:: Code coverage
+   :file: coverage_table.csv
+   :widths: 60, 10, 10, 20
+   :header-rows: 1
+
+🛠 Usage
+--------
 
 Install package
 
 .. code-block:: bash
 
-    pip3 install gen-vhost
+    pip3 install gen_vhost
 
-Prepare main entry point by downloading `main.py <https://raw.githubusercontent.com/vroncevic/gen_vhost/master/main.py>`_ or create your own.
+Prepare main entry point by downloading `main.py` or create your own.
 
 .. code-block:: bash
 
-    wget -O main.py https://raw.githubusercontent.com/vroncevic/gen_vhost/master/main.py
+    wget -O main.py https://raw.githubusercontent.com/vroncevic/gen_vhost/main/main.py
 
-Running tool for creating virtual host configuration files
+Running tool for creating new Virtual Host configuration file
 
 .. code-block:: bash
 
     python3 main.py generate-vhost --filename "vhost_static.conf" --type "static" --domain-name "static.vhost.com" --app-dir "/var/www/static" --log-dir "/var/log/static" --admin-email "admin@vhost.com"
-    python3 main.py generate-vhost --filename "vhost_ruby.conf" --type "ruby" --domain-name "ruby.vhost.com" --app-dir "/var/www/ruby" --log-dir "/var/log/ruby" --admin-email "admin@vhost.com"
-    python3 main.py generate-vhost --filename "vhost_python.conf" --type "python" --domain-name "python.vhost.com" --app-dir "/var/www/python" --log-dir "/var/log/python" --admin-email "admin@vhost.com"
-    python3 main.py generate-vhost --filename "vhost_php.conf" --type "php" --domain-name "php.vhost.com" --app-dir "/var/www/php" --log-dir "/var/log/php" --admin-email "admin@vhost.com"
-    python3 main.py generate-vhost --filename "vhost_perl.conf" --type "perl" --domain-name "perl.vhost.com" --app-dir "/var/www/perl" --log-dir "/var/log/perl" --admin-email "admin@vhost.com"
 
-Copyright and licence
-----------------------
+📚 Docs
+-------
 
-|license: gpl v3| |license: apache 2.0|
+More documentation and info at
 
-.. |license: gpl v3| image:: https://img.shields.io/badge/license-gplv3-blue.svg
-   :target: https://www.gnu.org/licenses/gpl-3.0
+* `gen_vhost.readthedocs.io <https://gen-vhost.readthedocs.io>`_
+* `www.python.org <https://www.python.org/>`_
 
-.. |license: apache 2.0| image:: https://img.shields.io/badge/license-apache%202.0-blue.svg
-   :target: https://opensource.org/licenses/apache-2.0
+👥 Contributing
+---------------
 
-Copyright (C) 2017 - 2026 by `vroncevic.github.io/gen_vhost <https://vroncevic.github.io/gen_vhost>`_
+`Contributing to gen_vhost <https://github.com/vroncevic/gen_vhost/blob/dev/CONTRIBUTING.md>`_
+
+📄 Copyright and licence
+-------------------------
+
+Copyright (C) 2025 - 2026 by `vroncevic.github.io/gen_vhost <https://vroncevic.github.io/gen_vhost>`_
 
 **gen_vhost** is free software; you can redistribute it and/or modify
 it under the same terms as Python itself, either Python version 3.x or,
 at your option, any later version of Python 3 you may have available.
 
 Lets help and support PSF.
-
-|python software foundation|
-
-.. |python software foundation| image:: https://raw.githubusercontent.com/vroncevic/gen_vhost/dev/docs/psf-logo-alpha.png
-   :target: https://www.python.org/psf/
-
-|donate|
-
-.. |donate| image:: https://www.paypalobjects.com/en_us/i/btn/btn_donatecc_lg.gif
-   :target: https://www.python.org/psf/donations/
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

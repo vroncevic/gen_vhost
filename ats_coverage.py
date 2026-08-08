@@ -19,83 +19,112 @@ Info
     Defines attribute(s) and method(s) for coverage support.
 '''
 
-import sys
-from typing import Any
-from os.path import exists, basename
+from __future__ import annotations
+
+from sys import stdout, stderr, exit
 from json import load
-from unittest import TestLoader, TestSuite, TextTestRunner
+from os.path import basename
 from pathlib import Path
+from unittest import TestLoader, TestSuite, TextTestRunner
+
 from coverage import Coverage
-from ats_utilities.checker.engine import Checker
-from ats_utilities.checker.ichecker import ErrorChecker
-from ats_utilities.reporter.engine import Reporter
-from ats_utilities.option.engine import OptionManager
-from ats_utilities.option.component_bundle import OptionComponentBundle
-from ats_utilities.option.option_namespace import OptionNamespace
-from ats_utilities.exceptions.ats_type_error import ATSTypeError
-from ats_utilities.exceptions.ats_file_error import ATSFileError
 
-__author__: str = 'Vladimir Roncevic'
-__copyright__: str = '(C) 2026, https://vroncevic.github.io/ats_coverage'
-__credits__: list[str] = ['Vladimir Roncevic', 'Python Software Foundation']
-__license__: str = 'https://github.com/vroncevic/ats_coverage/blob/dev/LICENSE'
-__version__: str = '1.1.7'
-__maintainer__: str = 'Vladimir Roncevic'
-__email__: str = 'elektron.ronca@gmail.com'
-__status__: str = 'Updated'
+__author__ = 'Vladimir Roncevic'
+__copyright__ = '(C) 2026, https://vroncevic.github.io/ats_coverage'
+__credits__ = ['Vladimir Roncevic', 'Python Software Foundation']
+__license__ = 'https://github.com/vroncevic/ats_coverage/blob/dev/LICENSE'
+__version__ = '1.0.0'
+__maintainer__ = 'Vladimir Roncevic'
+__email__ = 'elektron.ronca@gmail.com'
+__status__ = 'Development'
 
 
-def run_coverage(pro_name: str) -> str:
+def check_exists(item_path: str, is_dir: bool = False) -> None:
     '''
-        Runs coverage for project and generates report.
+        Checks if the item exists.
 
-        :param pro_name: Project name
-        :type pro_name: <str>
-        :exceptions: ATSTypeError | ATSFileError
+        :param item_path: Item path.
+        :param is_dir: Flag indicating if the path is a directory.
+        :exceptions:
+            | TypeError:  The parameter item_path type validation failed.
+            | ValueError: The parameter item_path format validation failed.
+            | ValueError: The directory with name does not exist.
     '''
-    checker: Checker = Checker()
-    error_msg: str | None = None
-    error_id: int | None = None
-    error_msg, error_id = checker.validates_parameters([('str:pro_name', pro_name)])
-    if error_id == ErrorChecker.TYPE_ERROR:
-        raise ATSTypeError(error_msg)
-    if not exists(f'../{pro_name}'):
-        raise ATSFileError(f'missing ../{pro_name}')
-    cov = Coverage(source=[f'../{pro_name}'])
+    if not isinstance(item_path, str):
+        raise TypeError(f'Parameter item_path must be of type str, not {type(item_path).__name__}')
+
+    if not item_path:
+        raise ValueError('Parameter item_path cannot be empty')
+
+    if is_dir:
+        if not Path(item_path).is_dir():
+            raise ValueError(f'Directory with name {item_path} does not exist')
+    else:
+        if not Path(item_path).is_file():
+            raise ValueError(f'File with name {item_path} does not exist')
+
+
+def run_coverage(pro_name: str) -> None:
+    '''
+        Runs coverage for project and generates reports in JSON and XML formats.
+
+        :param pro_name: Project name (is equal to directory name).
+        :exceptions:
+            | TypeError:  The parameter pro_name type validation failed.
+            | ValueError: The parameter pro_name format validation failed.
+            | ValueError: The directory with name does not exist.
+    '''
+    check_exists(pro_name, is_dir=True)
+
+    cov = Coverage(source=[f'{pro_name}'], config_file='.coveragerc')
+    stdout.write('\n--- Starting coverage ---\n')
     cov.start()
-    tests: TestSuite = TestLoader().discover('.', pattern='*_test.py')
+
+    tests: TestSuite = TestLoader().discover('tests', pattern='*_test.py', top_level_dir='.')
     test_runner = TextTestRunner(verbosity=2)
+    stdout.write('\n--- Test Report ---\n')
     test_runner.run(tests)
+
     cov.stop()
     cov.save()
-    report_file_name: str = f'{pro_name}_coverage.json'
-    cov.json_report(outfile=report_file_name)
-    reporter: Reporter = Reporter()
-    reporter.success([f'\nats_coverage: generated coverage {report_file_name}'])
-    return report_file_name
+
+    stdout.write('\n--- Coverage Report ---\n')
+    cov.report()
+    stdout.write('\n--- JSON Report ---\n')
+    cov.json_report(outfile=f'{pro_name}.json')
+    stdout.write(f'\n--- JSON Report saved to {pro_name}.json ---\n')
+    stdout.write('\n--- XML Report ---\n')
+    cov.xml_report(outfile=f'{pro_name}.xml')
+    stdout.write(f'\n--- XML Report saved to {pro_name}.xml ---\n')
+    stdout.write('\n--- HTML Report ---\n')
+    cov.html_report(directory='htmlcov')
+    stdout.write('\n--- HTML Report saved to htmlcov ---\n')
 
 
-def load_report(report_file_path: str) -> dict[str, Any]:
+def load_report(file_path: str) -> dict[str, object]:
     '''
-        Loads report from report file.
+        Loads coverage report from file (JSON format).
 
-        :param report_file_path: Report file path
-        :type report_file_path: <str>
-        :exceptions: ATSTypeError | ATSFileError
+        :param file_path: Coverage report file path.
+        :return: Coverage data report in dict format.
+        :exceptions:
+            | TypeError:  The parameter file_path type validation failed.
+            | ValueError: The parameter file_path format validation failed.
+            | ValueError: The file with name does not exist.
     '''
-    checker: Checker = Checker()
-    error_msg: str | None = None
-    error_id: int | None = None
-    error_msg, error_id = checker.validates_parameters([(
-        'str:report_file_path', report_file_path
-    )])
-    if error_id == ErrorChecker.TYPE_ERROR:
-        raise ATSTypeError(error_msg)
-    if not exists(report_file_path):
-        raise ATSFileError(f'{report_file_path} does not exist.')
-    data: dict[str, Any] = {}
-    with open(report_file_path, 'r', encoding='utf-8') as loaded_file:
-        data = load(loaded_file)
+
+    check_exists(file_path)
+
+    data: dict[str, object] = {}
+
+    try:
+        with open(file_path, 'r', encoding='utf-8') as loaded_file:
+            data = load(loaded_file)
+
+    except (OSError, UnicodeDecodeError) as exc:
+        stderr.write(f'{exc}\n')
+        pass
+
     return data
 
 
@@ -103,51 +132,55 @@ def find_root_package(module_path: str) -> Path | None:
     '''
         Finds root package for project structure.
 
-        :param module_path: Absolute path
-        :type module_path: <str>
-        :exceptions: ATSTypeError
+        :param module_path: Absolute path for project package.
+        :return: Root package path.
+        :exceptions:
+            | TypeError:  The parameter module_path type validation failed.
+            | ValueError: The parameter module_path format validation failed.
     '''
-    checker: Checker = Checker()
-    error_msg: str | None = None
-    error_id: int | None = None
-    error_msg, error_id = checker.validates_parameters([(
-        'str:module_path', module_path
-    )])
-    if error_id == ErrorChecker.TYPE_ERROR:
-        raise ATSTypeError(error_msg)
     root: Path | None = None
     path: Path = Path(module_path).resolve()
+
     while path.parent != path:
         if (path / '__init__.py').exists():
             root = path
+
         path = path.parent
+
     return root
 
 
-def update_readme(coverage: dict[str, Any]) -> None:
+def update_readme(coverage: dict[str, object], readme_path: str = 'README.md') -> None:
     '''
         Updates README.md file with code coverage report table.
 
-        :param coverage: Coverage data report
-        :type coverage: <dict[str, Any]>
-        :exceptions: ATSTypeError
+        :param coverage: Coverage data report in dict format.
+        :param readme_path: Path to README.md file.
+        :exceptions:
+            | TypeError:  The parameter coverage type validation failed.
+            | ValueError: The parameter coverage format validation failed.
+            | ValueError: The parameter readme_path type validation failed.
+            | ValueError: The parameter readme_path format validation failed.
+            | ValueError: The file with name does not exist.
     '''
-    checker: Checker = Checker()
-    error_msg: str | None = None
-    error_id: int | None = None
-    error_msg, error_id = checker.validates_parameters([('dict:coverage', coverage)])
-    if error_id == ErrorChecker.TYPE_ERROR:
-        raise ATSTypeError(error_msg)
-    readme_path: str = 'README.md'
+    check_exists(readme_path)
     lines: list[str] = []
-    with open(readme_path, 'r', encoding='utf-8') as current_file:
-        lines = current_file.readlines()
+
+    try:
+        with open(readme_path, 'r', encoding='utf-8') as readme_file:
+            lines = readme_file.readlines()
+
+    except (OSError, UnicodeDecodeError) as exc:
+        stderr.write(f'{exc}\n')
+        return
+
     new_lines: list[str] = []
     inside_coverage: bool = False
     inside_table: bool = False
     stmts: str = 'num_statements'
     miss: str = 'missing_lines'
     cover: str = 'percent_covered_display'
+
     for line in lines:
         if '### Code coverage' in line:
             inside_coverage = True
@@ -168,23 +201,28 @@ def update_readme(coverage: dict[str, Any]) -> None:
                 new_lines.append('| Name | Stmts | Miss | Cover |\n')
                 new_lines.append('|------|-------|------|-------|\n')
                 file_names: list[str] = coverage['files']
+
                 for name in file_names:
                     root_package: Path | None = find_root_package(name)
                     module: str = ''
+
                     if root_package:
                         abs_name = str(Path(name).resolve())
                         abs_root = str(root_package.resolve())
+
                         if abs_name.startswith(abs_root):
                             result: str = abs_name[len(abs_root):]
                             result = result.lstrip('/')
                             module = f'{basename(abs_root)}/{result}'
-                    file_summary: dict[str, Any] = coverage['files'][name]
+
+                    file_summary: dict[str, object] = coverage['files'][name]
                     statements: str = file_summary['summary'][stmts]
                     missing: str = file_summary['summary'][miss]
                     covered: str = file_summary['summary'][cover]
                     new_lines.append(
                         f'| `{module}` | {statements} | {missing} | {covered}%|\n'
                     )
+
                 total: str = '| **Total** |'
                 total_statements: str = coverage['totals'][stmts]
                 total_missing: str = coverage['totals'][miss]
@@ -206,28 +244,28 @@ def update_readme(coverage: dict[str, Any]) -> None:
 
         if not inside_table:
             new_lines.append(line)
+
     with open(readme_path, 'w', encoding='utf-8') as update_file:
         update_file.writelines(new_lines)
 
-def _build_tree(dir_path: Path, prefix: str = "") -> tuple[list[str], int, int]:
+
+def _build_tree(dir_path: Path, prefix: str = '') -> tuple[list[str], int, int]:
     '''
         Recursively builds tree lines and counts files/directories.
 
         :param dir_path: Directory path.
-        :type dir_path: <Path>
         :param prefix: Current indentation prefix.
-        :type prefix: <str>
         :return: Tuple containing tree lines list, directory count, and file count.
-        :rtype: <tuple[list[str], int, int]>
         :exceptions: None.
     '''
     entries = []
+
     for entry in dir_path.iterdir():
         if entry.name == '__pycache__' or entry.name.startswith('.'):
             continue
+
         entries.append(entry)
 
-    # Sort entries by name, ignoring leading underscores
     entries.sort(key=lambda x: x.name.lstrip('_').lower())
 
     lines = []
@@ -236,19 +274,19 @@ def _build_tree(dir_path: Path, prefix: str = "") -> tuple[list[str], int, int]:
 
     for i, entry in enumerate(entries):
         is_last = (i == len(entries) - 1)
-        connector = "└── " if is_last else "├── "
+        connector = '└── ' if is_last else '├── '
 
         if entry.is_dir():
             num_dirs += 1
-            lines.append(f"{prefix}{connector}{entry.name}/\n")
-            new_prefix = prefix + ("    " if is_last else "│\xa0\xa0 ")
+            lines.append(f'{prefix}{connector}{entry.name}/\n')
+            new_prefix = prefix + ('    ' if is_last else '│\xa0\xa0 ')
             sub_lines, sub_dirs, sub_files = _build_tree(entry, new_prefix)
             lines.extend(sub_lines)
             num_dirs += sub_dirs
             num_files += sub_files
         else:
             num_files += 1
-            lines.append(f"{prefix}{connector}{entry.name}\n")
+            lines.append(f'{prefix}{connector}{entry.name}\n')
 
     return lines, num_dirs, num_files
 
@@ -258,111 +296,190 @@ def generate_tree_lines(pro_name: str) -> tuple[list[str], int, int]:
         Generates tree structure representation of package.
 
         :param pro_name: Project name.
-        :type pro_name: <str>
         :return: Tuple containing tree lines list, directory count, and file count.
-        :rtype: <tuple[list[str], int, int]>
-        :exceptions: ATSFileError
+        :exceptions:
+            | TypeError: Parameter pro_name type validation failed.
+            | ValueError: Parameter pro_name format validation failed.
+            | ValueError: Directory with name does not exist.
     '''
-    pro_path = Path(pro_name)
-    if not pro_path.exists():
-        raise ATSFileError(f'missing {pro_name} folder')
+    check_exists(pro_name, is_dir=True)
 
-    lines = [f"    {pro_name}/\n"]
-    sub_lines, num_dirs, num_files = _build_tree(pro_path, prefix="         ")
+    pro_path = Path(pro_name)
+    lines = [f'    {pro_name}/\n']
+    sub_lines, num_dirs, num_files = _build_tree(pro_path, prefix='         ')
     lines.extend(sub_lines)
 
-    # Root itself is a directory
     return lines, num_dirs + 1, num_files
 
 
-def update_structure(pro_name: str) -> None:
+def update_structure(pro_name: str, section: str, file_path: str = 'README.md') -> None:
     '''
-        Updates README.md file with package directory structure.
+        Updates file with package directory structure (supports Markdown and reStructuredText).
 
-        :param pro_name: Project name
-        :type pro_name: <str>
-        :exceptions: ATSTypeError | ATSFileError
+        :param pro_name: Project name.
+        :param section: Section name.
+        :param file_path: Path to the target file.
+        :exceptions:
+            | TypeError:  The parameter pro_name type validation failed.
+            | TypeError:  The parameter section type validation failed.
+            | ValueError: The file with name does not exist.
     '''
-    checker: Checker = Checker()
-    error_msg: str | None = None
-    error_id: int | None = None
-    error_msg, error_id = checker.validates_parameters([('str:pro_name', pro_name)])
-    if error_id == ErrorChecker.TYPE_ERROR:
-        raise ATSTypeError(error_msg)
-
-    readme_path: str = 'README.md'
-    if not exists(readme_path):
-        raise ATSFileError(f'{readme_path} does not exist.')
+    check_exists(file_path)
 
     tree_lines, num_dirs, num_files = generate_tree_lines(pro_name)
-
     lines: list[str] = []
-    with open(readme_path, 'r', encoding='utf-8') as current_file:
-        lines = current_file.readlines()
+
+    try:
+        with open(file_path, 'r', encoding='utf-8') as target_file:
+            lines = target_file.readlines()
+
+    except (OSError, UnicodeDecodeError) as exc:
+        stderr.write(f'{exc}\n')
+        return
 
     new_lines: list[str] = []
     inside_tool_structure: bool = False
     replace_mode: bool = False
+    is_rst: bool = file_path.endswith('.rst')
+
+    markdown_heading: str = f'### {section}'
+    rst_heading: str = f'{section}\n'
 
     for line in lines:
-        if '### Tool structure' in line:
-            inside_tool_structure = True
-            new_lines.append(line)
-            continue
+        if is_rst:
+            if line == rst_heading:
+                inside_tool_structure = True
+                new_lines.append(line)
+                continue
+        else:
+            if markdown_heading in line:
+                inside_tool_structure = True
+                new_lines.append(line)
+                continue
 
         if inside_tool_structure:
-            if '### Code coverage' in line:
-                inside_tool_structure = False
-                replace_mode = False
-                new_lines.append(line)
-                continue
+            if is_rst:
+                if '..' in line and 'code-block' in line:
+                    new_lines.append(line)
+                    new_lines.append('\n')
+                    new_lines.extend(tree_lines)
+                    new_lines.append('\n')
+                    new_lines.append(f'     {num_dirs} directories, {num_files} files\n')
+                    new_lines.append('\n')
+                    replace_mode = True
+                    continue
 
-            if '</summary>' in line:
-                new_lines.append(line)
-                new_lines.append('\n')
-                new_lines.append('```bash\n')
-                new_lines.extend(tree_lines)
-                new_lines.append('\n')
-                new_lines.append(f'     {num_dirs} directories, {num_files} files\n')
-                new_lines.append('```\n')
-                replace_mode = True
-                continue
+                if 'Features' in line:
+                    inside_tool_structure = False
+                    replace_mode = False
+                    new_lines.append(line)
+                    continue
+            else:
+                if '### Code coverage' in line:
+                    inside_tool_structure = False
+                    replace_mode = False
+                    new_lines.append(line)
+                    continue
 
-            if '</details>' in line:
-                replace_mode = False
-                new_lines.append(line)
-                continue
+                if '</summary>' in line:
+                    new_lines.append(line)
+                    new_lines.append('\n')
+                    new_lines.append('```bash\n')
+                    new_lines.extend(tree_lines)
+                    new_lines.append('\n')
+                    new_lines.append(f'     {num_dirs} directories, {num_files} files\n')
+                    new_lines.append('```\n')
+                    replace_mode = True
+                    continue
+
+                if '</details>' in line:
+                    replace_mode = False
+                    new_lines.append(line)
+                    continue
 
             if replace_mode:
                 continue
 
         new_lines.append(line)
 
-    with open(readme_path, 'w', encoding='utf-8') as update_file:
-        update_file.writelines(new_lines)
-
-
-if __name__ == "__main__":
-    cli: OptionManager = OptionManager(OptionComponentBundle(parameters={
-        'description': 'ats_coverage 2025',
-        'version': '1.1.7',
-        'licence': 'GPLv3'
-    }))
-    cli.add_operation(
-        '-n', '--name', dest='name',
-        help='generate coverage report for project (provide name)'
-    )
-    args: OptionNamespace = cli.parse_args(sys.argv)
-    main_reporter: Reporter = Reporter()
-
-    if not bool(getattr(args, "name")):
-        main_reporter.error(['ats_coverage: missing name argument'])
-        sys.exit(127)
     try:
-        pro_report_file: str = f'{getattr(args, "name")}.json'
-        report_data: dict[str, Any] = load_report(pro_report_file)
-        update_readme(report_data)
-        update_structure(getattr(args, "name"))
-    except (ATSTypeError, ATSFileError) as e:
-        main_reporter.error([f'ats_coverage: {e}'])
-        sys.exit(128)
+        with open(file_path, 'w', encoding='utf-8') as target_file:
+            target_file.writelines(new_lines)
+
+    except (OSError, UnicodeDecodeError) as exc:
+        stderr.write(f'{exc}\n')
+        return
+
+
+def update_index_coverage(coverage: dict[str, object], csv_path: str = 'docs/source/coverage_table.csv') -> None:
+    '''
+        Updates docs/source/coverage_table.csv with code coverage data.
+
+        :param coverage: Coverage data report in dict format.
+        :param csv_path: Path to coverage_table.csv file.
+        :exceptions:
+            | TypeError:  The parameter coverage type validation failed.
+            | ValueError: The parameter csv_path type validation failed.
+            | ValueError: The directory with name does not exist.
+    '''
+    dir_path = Path(csv_path).parent
+    check_exists(str(dir_path), is_dir=True)
+
+    stmts: str = 'num_statements'
+    miss: str = 'missing_lines'
+    cover: str = 'percent_covered_display'
+
+    csv_lines = ['"Name", "Stmts", "Miss", "Cover"']
+    file_names: list[str] = coverage['files']
+
+    for name in file_names:
+        root_package: Path | None = find_root_package(name)
+        module: str = ''
+
+        if root_package:
+            abs_name = str(Path(name).resolve())
+            abs_root = str(root_package.resolve())
+
+            if abs_name.startswith(abs_root):
+                result: str = abs_name[len(abs_root):]
+                result = result.lstrip('/')
+                module = f'{basename(abs_root)}/{result}'
+
+        file_summary: dict[str, object] = coverage['files'][name]
+        statements: str = file_summary['summary'][stmts]
+        missing: str = file_summary['summary'][miss]
+        covered: str = file_summary['summary'][cover]
+        csv_lines.append(f'"{module}", "{statements}", "{missing}", "{covered}%"')
+
+    total_statements: str = coverage['totals'][stmts]
+    total_missing: str = coverage['totals'][miss]
+    total_covered: str = coverage['totals'][cover]
+    csv_lines.append(f'"Total", "{total_statements}", "{total_missing}", "{total_covered}%"')
+
+    try:
+        with open(csv_path, 'w', encoding='utf-8') as csv_file:
+            csv_file.write('\n'.join(csv_lines) + '\n')
+
+    except OSError as exc:
+        stderr.write(f'{exc}\n')
+
+
+if __name__ == '__main__':
+    try:
+        pro_name: str = 'gen_vhost'
+        run_coverage(pro_name)
+        report_data: dict[str, object] = load_report(f'{pro_name}.json')
+
+        if report_data:
+            update_readme(report_data)
+            update_structure(pro_name, 'Tool structure', 'README.md')
+            update_index_coverage(report_data)
+            update_structure(pro_name, 'Tool structure', 'docs/source/index.rst')
+            exit(0)
+
+        stderr.write('ats_coverage: failed to generate coverage report\n')
+        exit(129)
+
+    except (ValueError, TypeError) as exc:
+        stderr.write(f'ats_coverage: {exc}\n')
+        exit(128)

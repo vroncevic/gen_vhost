@@ -1,7 +1,0 @@
-<VirtualHost ${PORTS}>
-    DocumentRoot ${ROOT_DOC}
-    ServerName ${SERVER_NAME}
-    Alias ${URL} ${TARGET_DIR}
-    ServerAdmin ${ADMIN_EMAIL}
-</VirtualHost>
-

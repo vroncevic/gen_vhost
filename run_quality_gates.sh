@@ -7,5 +7,9 @@
 # @author  Vladimir Roncevic <elektron.ronca@gmail.com>
 #
 
-python3 ats_coverage.py
+python3 gates/gates/interfaces_checker.py gen_vhost
+python3 gates/gates/isp_checker.py gen_vhost
+python3 gates/gates/limits_checker.py gen_vhost
+python3 gates/gates/srp_checker.py gen_vhost
+
 echo "Done"

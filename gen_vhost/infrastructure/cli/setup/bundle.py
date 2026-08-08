@@ -2,7 +2,7 @@
 
 '''
 Module
-    main.py
+    bundle.py
 Copyright
     Copyright (C) 2026 Vladimir Roncevic <elektron.ronca@gmail.com>
     gen_vhost is free software: you can redistribute it and/or modify it
@@ -16,15 +16,19 @@ Copyright
     You should have received a copy of the GNU General Public License along
     with this program. If not, see <http://www.gnu.org/licenses/>.
 Info
-    Main entry point for Task Code Generator CLI.
+    Defines the CLI bundle.
 '''
 
 from __future__ import annotations
 
-from sys import exit
+from collections.abc import Sequence
+from dataclasses import dataclass
 
-from gen_vhost.engine import GenVhost
-from gen_vhost.setup.factory import GenVhostBundleFactory
+from ats_utilities.option.imanager import IOptionManager
+from ats_utilities.utils.reflection import instance_to_dict
+
+from gen_vhost.core.service.iservice import IService
+from gen_vhost.infrastructure.command.command import CommandBundle
 
 __author__ = 'Vladimir Roncevic'
 __copyright__ = '(C) 2026, https://vroncevic.github.io/gen_vhost'
@@ -36,23 +40,30 @@ __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
 
 
-def main() -> bool:
+@dataclass(slots=True, frozen=True, kw_only=True)
+class CLIBundle:
     '''
-        Bootstraps and runs the gen_vhost with required adapters.
+        Defines the CLI bundle.
 
-        :return: True if successful, False otherwise.
-        :exceptions: None
+        It defines:
+
+            :attributes:
+                | service - The service orchestrating the generator.
+                | parser - The argument parser for parsing CLI command arguments.
+                | commands - The sequence of command pairs.
+            :methods:
+                | to_dict - Converts the CLI bundle to a dictionary.
     '''
-    gen_vhost: GenVhost = GenVhost(GenVhostBundleFactory.create_bundle())
 
-    return gen_vhost.process()
+    service: IService
+    parser: IOptionManager
+    commands: Sequence[CommandBundle]
 
+    def to_dict(self) -> dict[str, object]:
+        '''
+            Converts the CLI bundle to a dictionary.
 
-if __name__ == '__main__':
-    '''
-        Entry point for gen_vhost execution.
-
-        :exit code: 0 if successful, 1 otherwise.
-        :exceptions: None
-    '''
-    exit(0 if main() else 1)
+            :return: Dictionary representation of the CLI bundle.
+            :exceptions: None.
+        '''
+        return instance_to_dict(self)
