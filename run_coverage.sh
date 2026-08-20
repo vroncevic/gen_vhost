@@ -1,12 +1,12 @@
 #!/bin/bash
 #
 # @brief   gen_vhost
-# @version v1.0.1
-# @date    Sat Aug 11 09:58:41 2017
-# @company None, free software to use 2017
+# @version 1.1.8
+# @date    Sat Aug 08 07:35:10 2026
+# @company None, free software to use 2026
 # @author  Vladimir Roncevic <elektron.ronca@gmail.com>
 #
 
-python3 run_coverage.py
-python3 ats_coverage.py -n gen_vhost
+python3 coverage/ats_coverage.py gen_vhost
+pylint gen_vhost > gen_vhost.report
 echo "Done"

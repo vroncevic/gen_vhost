@@ -15,8 +15,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="gen_vhost.gen_vhost_bundle module" href="gen_vhost.gen_vhost_bundle.html" />
-    <link rel="prev" title="gen_vhost.infrastructure.template_provider module" href="gen_vhost.infrastructure.template_provider.html" /> 
+    <link rel="next" title="main module" href="main.html" />
+    <link rel="prev" title="gen_vhost.setup.validator module" href="gen_vhost.setup.validator.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,10 +28,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="gen_vhost.gen_vhost_bundle.html" title="gen_vhost.gen_vhost_bundle module"
+          <a href="main.html" title="main module"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="gen_vhost.infrastructure.template_provider.html" title="gen_vhost.infrastructure.template_provider module"
+          <a href="gen_vhost.setup.validator.html" title="gen_vhost.setup.validator module"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >gen_vhost</a> &#187;</li>
@@ -62,46 +62,58 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program. If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
 </dd>
-<dt>Info</dt><dd><p>Main engine orchestrator class for Task Code Generator CLI.</p>
+<dt>Info</dt><dd><p>Engine orchestrating the initialization and execution of gen_vhost.</p>
 </dd>
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="gen_vhost.engine.GenVhost">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gen_vhost.engine.</span></span><span class="sig-name descname"><span class="pre">GenVhost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_bundle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gen_vhost.gen_vhost_bundle.html#gen_vhost.gen_vhost_bundle.GenVhostBundle" title="gen_vhost.gen_vhost_bundle.GenVhostBundle"><span class="pre">GenVhostBundle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gen_vhost/engine.html#GenVhost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gen_vhost.engine.GenVhost" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gen_vhost.engine.</span></span><span class="sig-name descname"><span class="pre">GenVhost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bundle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gen_vhost.setup.bundle.html#gen_vhost.setup.bundle.GenVhostBundle" title="gen_vhost.setup.bundle.GenVhostBundle"><span class="pre">GenVhostBundle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gen_vhost/engine.html#GenVhost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gen_vhost.engine.GenVhost" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
-<p>Engine orchestrating the initialization and execution of GenVhost.</p>
+<p>Engine orchestrating the initialization and execution of gen_vhost.</p>
 <p>It defines:</p>
 <blockquote>
 <div><dl class="field-list">
 <dt class="field-odd">attributes<span class="colon">:</span></dt>
 <dd class="field-odd"><div class="line-block">
-<div class="line">_info_file - Path to the info file.</div>
-<div class="line">_cli - Adapter for command line user interface.</div>
+<div class="line">_is_initialized - The flag indicating whether the gen_vhost engine is initialized.</div>
+<div class="line">_logger - The logger for logging messages during initialization and execution.</div>
+<div class="line">_cli - The adapter for the command line interface.</div>
 </div>
 </dd>
 <dt class="field-even">methods<span class="colon">:</span></dt>
 <dd class="field-even"><div class="line-block">
-<div class="line">__init__ - Initializes the GenVhost engine with adapters and services.</div>
-<div class="line">process - Processes the gen_vhost.</div>
+<div class="line">__init__ - Initializes the gen_vhost engine with adapters and services.</div>
+<div class="line">process - Processes the gen_vhost commands.</div>
 </div>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="gen_vhost.engine.GenVhost._abc_impl">
-<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#gen_vhost.engine.GenVhost._abc_impl" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="gen_vhost.engine.GenVhost._cli">
+<span class="sig-name descname"><span class="pre">_cli</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="gen_vhost.infrastructure.cli.icli.html#gen_vhost.infrastructure.cli.icli.ICLI" title="gen_vhost.infrastructure.cli.icli.ICLI"><span class="pre">ICLI</span></a></em><a class="headerlink" href="#gen_vhost.engine.GenVhost._cli" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="gen_vhost.engine.GenVhost._info_file">
-<span class="sig-name descname"><span class="pre">_info_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'infrastructure/config/gen_vhost.cfg'</span></em><a class="headerlink" href="#gen_vhost.engine.GenVhost._info_file" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="gen_vhost.engine.GenVhost._is_initialized">
+<span class="sig-name descname"><span class="pre">_is_initialized</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#gen_vhost.engine.GenVhost._is_initialized" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gen_vhost.engine.GenVhost._logger">
+<span class="sig-name descname"><span class="pre">_logger</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ILogger</span></em><a class="headerlink" href="#gen_vhost.engine.GenVhost._logger" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gen_vhost.engine.GenVhost.process">
-<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gen_vhost/engine.html#GenVhost.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gen_vhost.engine.GenVhost.process" title="Link to this definition">¶</a></dt>
-<dd><p>Processes requests for the GenVhost tool.</p>
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/gen_vhost/engine.html#GenVhost.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gen_vhost.engine.GenVhost.process" title="Link to this definition">¶</a></dt>
+<dd><p>Processes the gen_vhost commands.</p>
 <dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>verbose</strong> – Verbose execution flag.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if successful, False otherwise.</p>
+</dd>
 <dt class="field-odd">Exceptions<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
 </dd>
@@ -124,8 +136,9 @@ with this program. If not, see &lt;<a class="reference external" href="http://ww
     <ul>
 <li><a class="reference internal" href="#">gen_vhost.engine module</a><ul>
 <li><a class="reference internal" href="#gen_vhost.engine.GenVhost"><code class="docutils literal notranslate"><span class="pre">GenVhost</span></code></a><ul>
-<li><a class="reference internal" href="#gen_vhost.engine.GenVhost._abc_impl"><code class="docutils literal notranslate"><span class="pre">GenVhost._abc_impl</span></code></a></li>
-<li><a class="reference internal" href="#gen_vhost.engine.GenVhost._info_file"><code class="docutils literal notranslate"><span class="pre">GenVhost._info_file</span></code></a></li>
+<li><a class="reference internal" href="#gen_vhost.engine.GenVhost._cli"><code class="docutils literal notranslate"><span class="pre">GenVhost._cli</span></code></a></li>
+<li><a class="reference internal" href="#gen_vhost.engine.GenVhost._is_initialized"><code class="docutils literal notranslate"><span class="pre">GenVhost._is_initialized</span></code></a></li>
+<li><a class="reference internal" href="#gen_vhost.engine.GenVhost._logger"><code class="docutils literal notranslate"><span class="pre">GenVhost._logger</span></code></a></li>
 <li><a class="reference internal" href="#gen_vhost.engine.GenVhost.process"><code class="docutils literal notranslate"><span class="pre">GenVhost.process()</span></code></a></li>
 </ul>
 </li>
@@ -136,13 +149,13 @@ with this program. If not, see &lt;<a class="reference external" href="http://ww
   </div>
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="gen_vhost.infrastructure.template_provider.html"
-                          title="previous chapter">gen_vhost.infrastructure.template_provider module</a></p>
+    <p class="topless"><a href="gen_vhost.setup.validator.html"
+                          title="previous chapter">gen_vhost.setup.validator module</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="gen_vhost.gen_vhost_bundle.html"
-                          title="next chapter">gen_vhost.gen_vhost_bundle module</a></p>
+    <p class="topless"><a href="main.html"
+                          title="next chapter">main module</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -175,10 +188,10 @@ with this program. If not, see &lt;<a class="reference external" href="http://ww
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="gen_vhost.gen_vhost_bundle.html" title="gen_vhost.gen_vhost_bundle module"
+          <a href="main.html" title="main module"
              >next</a> |</li>
         <li class="right" >
-          <a href="gen_vhost.infrastructure.template_provider.html" title="gen_vhost.infrastructure.template_provider module"
+          <a href="gen_vhost.setup.validator.html" title="gen_vhost.setup.validator module"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">gen_vhost https://github.com/vroncevic/gen_vhost/releases documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >gen_vhost</a> &#187;</li>

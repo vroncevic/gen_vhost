@@ -4,7 +4,7 @@
 Module
     __init__.py
 Copyright
-    Copyright (C) 2026 Vladimir Roncevic <elektron.ronca@gmail.com>
+    Copyright (C) 2018 - 2026 Vladimir Roncevic <elektron.ronca@gmail.com>
     gen_vhost is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by the
     Free Software Foundation, either version 3 of the License, or
@@ -18,12 +18,13 @@ Copyright
 Info
     Initialization module for the gen_vhost.
 '''
+from __future__ import annotations
 
-__author__: str = 'Vladimir Roncevic'
-__copyright__: str = '(C) 2026, https://vroncevic.github.io/gen_vhost'
-__credits__: list[str] = ['Vladimir Roncevic', 'Python Software Foundation']
-__license__: str = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__: str = '1.1.7'
-__maintainer__: str = 'Vladimir Roncevic'
-__email__: str = 'elektron.ronca@gmail.com'
-__status__: str = 'Development'
+__author__ = 'Vladimir Roncevic'
+__copyright__ = '(C) 2026, https://vroncevic.github.io/gen_vhost'
+__credits__ = ['Vladimir Roncevic', 'Python Software Foundation']
+__license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
+__version__ = '1.1.8'
+__maintainer__ = 'Vladimir Roncevic'
+__email__ = 'elektron.ronca@gmail.com'
+__status__ = 'Development'

@@ -54,139 +54,129 @@
 <span class="sd">    You should have received a copy of the GNU General Public License along</span>
 <span class="sd">    with this program. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">Info</span>
-<span class="sd">    Main engine orchestrator class for Task Code Generator CLI.</span>
+<span class="sd">    Engine orchestrating the initialization and execution of gen_vhost.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">override</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">realpath</span>
-<span class="kn">from</span> <span class="nn">ats_utilities.base.engine</span> <span class="kn">import</span> <span class="n">Base</span>
-<span class="kn">from</span> <span class="nn">ats_utilities.base.component_bundle</span> <span class="kn">import</span> <span class="n">BaseComponentBundle</span>
-<span class="kn">from</span> <span class="nn">ats_utilities.option.ioption_parser</span> <span class="kn">import</span> <span class="n">IOptionManager</span>
-<span class="kn">from</span> <span class="nn">ats_utilities.exceptions.ats_value_error</span> <span class="kn">import</span> <span class="n">ATSValueError</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.gen_vhost_bundle</span> <span class="kn">import</span> <span class="n">GenVhostBundle</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.domain.ports.itemplate_provider</span> <span class="kn">import</span> <span class="n">ITemplateProvider</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.infrastructure.template_provider</span> <span class="kn">import</span> <span class="n">TemplateProvider</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.domain.ports.ifile_writer</span> <span class="kn">import</span> <span class="n">IFileWriter</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.infrastructure.file_writer</span> <span class="kn">import</span> <span class="n">FileWriter</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.domain.ports.ifile_gen</span> <span class="kn">import</span> <span class="n">IFileGen</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.application.service</span> <span class="kn">import</span> <span class="n">FileGen</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.application.service_bundle</span> <span class="kn">import</span> <span class="n">ServiceBundle</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.infrastructure.icli_command</span> <span class="kn">import</span> <span class="n">ICLICommand</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.infrastructure.cli_bundle</span> <span class="kn">import</span> <span class="n">CLIBundle</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.infrastructure.gen_vhost_command</span> <span class="kn">import</span> <span class="n">GenVHostCommand</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.infrastructure.icli</span> <span class="kn">import</span> <span class="n">ICLI</span>
-<span class="kn">from</span> <span class="nn">gen_vhost.infrastructure.cli</span> <span class="kn">import</span> <span class="n">CLI</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Vladimir Roncevic&#39;</span>
-<span class="n">__copyright__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;(C) 2026, https://vroncevic.github.io/gen_vhost&#39;</span>
-<span class="n">__credits__</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Vladimir Roncevic&#39;</span><span class="p">,</span> <span class="s1">&#39;Python Software Foundation&#39;</span><span class="p">]</span>
-<span class="n">__license__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE&#39;</span>
-<span class="n">__version__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;1.1.7&#39;</span>
-<span class="n">__maintainer__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Vladimir Roncevic&#39;</span>
-<span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;elektron.ronca@gmail.com&#39;</span>
-<span class="n">__status__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Mapping</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">INFO</span><span class="p">,</span> <span class="n">ERROR</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+
+<span class="kn">from</span> <span class="nn">ats_utilities.base.engine</span> <span class="kn">import</span> <span class="n">Base</span>
+<span class="kn">from</span> <span class="nn">ats_utilities.logger.ilogger</span> <span class="kn">import</span> <span class="n">ILogger</span>
+<span class="kn">from</span> <span class="nn">ats_utilities.exceptions</span> <span class="kn">import</span> <span class="n">ATSValueError</span><span class="p">,</span> <span class="n">ATSTypeError</span>
+
+<span class="kn">from</span> <span class="nn">gen_vhost.setup.bundle</span> <span class="kn">import</span> <span class="n">GenVhostBundle</span>
+<span class="kn">from</span> <span class="nn">gen_vhost.setup.validator</span> <span class="kn">import</span> <span class="n">GenVhostBundleValidator</span>
+<span class="kn">from</span> <span class="nn">gen_vhost.infrastructure.cli.icli</span> <span class="kn">import</span> <span class="n">ICLI</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Vladimir Roncevic&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) 2026, https://vroncevic.github.io/gen_vhost&#39;</span>
+<span class="n">__credits__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Vladimir Roncevic&#39;</span><span class="p">,</span> <span class="s1">&#39;Python Software Foundation&#39;</span><span class="p">]</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;1.1.8&#39;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s1">&#39;Vladimir Roncevic&#39;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s1">&#39;elektron.ronca@gmail.com&#39;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Updated&#39;</span>
 
 
 <div class="viewcode-block" id="GenVhost">
 <a class="viewcode-back" href="../../gen_vhost.engine.html#gen_vhost.engine.GenVhost">[docs]</a>
 <span class="k">class</span> <span class="nc">GenVhost</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Engine orchestrating the initialization and execution of GenVhost.</span>
+<span class="sd">        Engine orchestrating the initialization and execution of gen_vhost.</span>
 
 <span class="sd">        It defines:</span>
 
 <span class="sd">            :attributes:</span>
-<span class="sd">                | _info_file - Path to the info file.</span>
-<span class="sd">                | _cli - Adapter for command line user interface.</span>
+<span class="sd">                | _is_initialized - The flag indicating whether the gen_vhost engine is initialized.</span>
+<span class="sd">                | _logger - The logger for logging messages during initialization and execution.</span>
+<span class="sd">                | _cli - The adapter for the command line interface.</span>
 <span class="sd">            :methods:</span>
-<span class="sd">                | __init__ - Initializes the GenVhost engine with adapters and services.</span>
-<span class="sd">                | process - Processes the gen_vhost.</span>
+<span class="sd">                | __init__ - Initializes the gen_vhost engine with adapters and services.</span>
+<span class="sd">                | process - Processes the gen_vhost commands.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">_info_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;infrastructure/config/gen_vhost.cfg&#39;</span>
+    <span class="n">_is_initialized</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">_logger</span><span class="p">:</span> <span class="n">ILogger</span>
+    <span class="n">_cli</span><span class="p">:</span> <span class="n">ICLI</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component_bundle</span><span class="p">:</span> <span class="n">GenVhostBundle</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bundle</span><span class="p">:</span> <span class="n">GenVhostBundle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">            Initializes the GenVhost engine with adapters and services.</span>
+<span class="sd">            Initializes the gen_vhost engine with adapters and services.</span>
 
-<span class="sd">            :param component_bundle: GenVhost bundle containing adapters and services | None.</span>
-<span class="sd">            :type component_bundle: &lt;GenVhostBundle | None&gt;</span>
+<span class="sd">            :param bundle: gen_vhost bundle containing adapters and services.</span>
 <span class="sd">            :exceptions: None.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">current_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">BaseComponentBundle</span><span class="p">(</span><span class="n">info_file</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_info_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_initialized</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_initialized</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ATSValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed to initialize engine with </span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_info_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">GenVhostBundleValidator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">bundle</span><span class="p">)</span>
+
+            <span class="c1"># Initialize base engine</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bundle</span><span class="o">.</span><span class="n">base</span><span class="p">)</span>
 
             <span class="c1"># Mark as not initialized (waiting for other components to be initialized)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_is_initialized</span> <span class="o">=</span> <span class="kc">False</span>
 
-            <span class="c1"># Use provided component bundle or use default adapters</span>
-            <span class="n">bundle</span><span class="p">:</span> <span class="n">GenVhostBundle</span> <span class="o">=</span> <span class="n">component_bundle</span> <span class="ow">or</span> <span class="n">GenVhostBundle</span><span class="p">()</span>
-
-            <span class="c1"># Initialization of secondary adapters (Infrastructure)</span>
-            <span class="n">template_provider</span><span class="p">:</span> <span class="n">ITemplateProvider</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">template_provider</span> <span class="ow">or</span> <span class="n">TemplateProvider</span><span class="p">()</span>
-            <span class="n">file_writer</span><span class="p">:</span> <span class="n">IFileWriter</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">file_writer</span> <span class="ow">or</span> <span class="n">FileWriter</span><span class="p">()</span>
-
-            <span class="c1"># Initialization of option manager adapter (Adapter for options parsing)</span>
-            <span class="n">parser</span><span class="p">:</span> <span class="n">IOptionManager</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">parser</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options_parser</span>
-
-            <span class="c1"># Injecting adapters into the application service (Orchestration)</span>
-            <span class="n">service_bundle</span><span class="p">:</span> <span class="n">ServiceBundle</span> <span class="o">=</span> <span class="n">ServiceBundle</span><span class="p">(</span>
-                <span class="n">template_provider</span><span class="o">=</span><span class="n">template_provider</span><span class="p">,</span> <span class="n">file_writer</span><span class="o">=</span><span class="n">file_writer</span>
-            <span class="p">)</span>
-            <span class="n">service</span><span class="p">:</span> <span class="n">IFileGen</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">service</span> <span class="ow">or</span> <span class="n">FileGen</span><span class="p">(</span><span class="n">service_bundle</span><span class="p">)</span>
-
-            <span class="c1"># Setting up CLI command strategies (Command strategies for CLI)</span>
-            <span class="n">commands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ICLICommand</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">GenVHostCommand</span><span class="p">()]</span>
-
-            <span class="c1"># Setting up primary adapter (CLI interface)</span>
-            <span class="n">cli_bundle</span><span class="p">:</span> <span class="n">CLIBundle</span> <span class="o">=</span> <span class="n">CLIBundle</span><span class="p">(</span><span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span> <span class="n">commands</span><span class="o">=</span><span class="n">commands</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_cli</span><span class="p">:</span> <span class="n">ICLI</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">cli</span> <span class="ow">or</span> <span class="n">CLI</span><span class="p">(</span><span class="n">cli_bundle</span><span class="p">)</span>
+            <span class="c1"># Setting up primary inbound adapter (CLI interface)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cli</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">cli</span>
 
             <span class="c1"># Mark as initialized (all components initialized)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_is_initialized</span> <span class="o">=</span> <span class="nb">all</span><span class="p">([</span>
-               <span class="n">component</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">()</span> <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="p">[</span><span class="n">template_provider</span><span class="p">,</span> <span class="n">file_writer</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cli</span><span class="p">]</span> <span class="k">if</span> <span class="n">component</span>
-            <span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">success</span><span class="p">([</span><span class="s2">&quot;✅ gen_vhost: engine initialized successfully.&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_initialized</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">component</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">()</span> <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="n">bundle</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">option_manager</span><span class="p">,</span>
+                    <span class="n">bundle</span><span class="o">.</span><span class="n">service</span><span class="p">,</span>
+                    <span class="n">bundle</span><span class="o">.</span><span class="n">subprocessor</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_cli</span>
+                <span class="p">]</span> <span class="k">if</span> <span class="n">component</span>
+            <span class="p">)</span>
 
-        <span class="k">except</span> <span class="p">(</span><span class="n">ATSValueError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">error</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
+            <span class="c1"># Setting up logger for tool engine</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_context</span><span class="p">()</span><span class="o">.</span><span class="n">logger</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="s1">&#39;✅ gen_vhost: engine initialized successfully!&#39;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="p">(</span><span class="n">ATSValueError</span><span class="p">,</span> <span class="n">ATSTypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">error</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost unexpected exception: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
+            <span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost unexpected exception: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GenVhost.process">
 <a class="viewcode-back" href="../../gen_vhost.engine.html#gen_vhost.engine.GenVhost.process">[docs]</a>
-    <span class="nd">@override</span>
-    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">            Processes requests for the GenVhost tool.</span>
+<span class="sd">            Processes the gen_vhost commands.</span>
 
+<span class="sd">            :param verbose: Verbose execution flag.</span>
+<span class="sd">            :return: True if successful, False otherwise.</span>
 <span class="sd">            :exceptions: None.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">result</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">success</span><span class="p">([</span><span class="s2">&quot;🔥 Starting execution command...&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="s1">&#39;🔥 Starting execution command...&#39;</span><span class="p">)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cli</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">success</span><span class="p">([</span><span class="s2">&quot;✅ Execution finished!&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="s1">&#39;✅ Execution finished!&#39;</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;returncode&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">error</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stderr&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">error</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost: exiting with error.&#39;</span><span class="p">])</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">success</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;✅ gen_vhost: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stdout&quot;</span><span class="p">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;done!&#39;</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">success</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;✅ gen_vhost: exiting successfully.&#39;</span><span class="p">])</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">error</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost: engine not initialized.&#39;</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">ERROR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;❌ gen_vhost: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stderr&quot;</span><span class="p">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s2">&quot;failed!&quot;</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="s1">&#39;✅ gen_vhost: done!&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="s1">&#39;✅ gen_vhost: exiting successfully!&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">ERROR</span><span class="p">,</span> <span class="s1">&#39;❌ gen_vhost: engine not initialized!&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">except</span> <span class="p">(</span><span class="n">ATSValueError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">error</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">ATSValueError</span><span class="p">,</span> <span class="n">ATSTypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">ERROR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;❌ gen_vhost: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">!&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reporter</span><span class="o">.</span><span class="n">error</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;❌ gen_vhost unexpected exception: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">ERROR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;❌ gen_vhost unexpected exception: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">!&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
 </div>
 
 </pre></div>

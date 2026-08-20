@@ -1,0 +1,57 @@
+{
+    "perl": {
+        "source_dir": "perl",
+        "path_replacements": {
+            "vhost_perl.template": "FILENAME"
+        },
+        "exclude": [
+            "**/.coverage",
+            "**/.vscode/**",
+            "**/.git/**"
+        ]
+    },
+    "php": {
+        "source_dir": "php",
+        "path_replacements": {
+            "vhost_php.template": "FILENAME"
+        },
+        "exclude": [
+            "**/.coverage",
+            "**/.vscode/**",
+            "**/.git/**"
+        ]
+    },
+    "python": {
+        "source_dir": "python",
+        "path_replacements": {
+            "vhost_python.template": "FILENAME"
+        },
+        "exclude": [
+            "**/.coverage",
+            "**/.vscode/**",
+            "**/.git/**"
+        ]
+    },
+    "ruby": {
+        "source_dir": "ruby",
+        "path_replacements": {
+            "vhost_ruby.template": "FILENAME"
+        },
+        "exclude": [
+            "**/.coverage",
+            "**/.vscode/**",
+            "**/.git/**"
+        ]
+    },
+    "static": {
+        "source_dir": "static",
+        "path_replacements": {
+            "vhost_static.template": "FILENAME"
+        },
+        "exclude": [
+            "**/.coverage",
+            "**/.vscode/**",
+            "**/.git/**"
+        ]
+    }
+}

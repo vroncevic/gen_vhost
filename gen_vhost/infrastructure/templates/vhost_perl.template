@@ -1,9 +1,0 @@
-<VirtualHost ${PORTS}>
-    # mod_perl
-    PerlOptions +Parent
-    PerlSwitches -Mlib=${ROOT_DOC}
-    DocumentRoot ${ROOT_DOC}
-    ServerName ${SERVER_NAME}
-    ServerAdmin ${ADMIN_EMAIL}
-</VirtualHost>
-

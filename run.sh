@@ -1,4 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
+#
+# @brief   gen_vhost
+# @version 1.1.8
+# @date    Sat Aug 08 07:35:10 2026
+# @company None, free software to use 2026
+# @author  Vladimir Roncevic <elektron.ronca@gmail.com>
+#
 
 python3 main.py generate-vhost --filename "vhost_static.conf" --type "static" --domain-name "static.vhost.com" --app-dir "/var/www/static" --log-dir "/var/log/static" --admin-email "admin@vhost.com"
 python3 main.py generate-vhost --filename "vhost_ruby.conf" --type "ruby" --domain-name "ruby.vhost.com" --app-dir "/var/www/ruby" --log-dir "/var/log/ruby" --admin-email "admin@vhost.com"
