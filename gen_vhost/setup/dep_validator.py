@@ -24,6 +24,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 
 from ats_utilities.validation.check_type import istype
+from ats_utilities.exceptions import ATSValueError, ATSTypeError
 from ats_utilities.validation.check_value import not_none
 
 from gen_vhost.setup.dependencies import GenVhostBundleDependencies
@@ -33,7 +34,7 @@ __author__ = 'Vladimir Roncevic'
 __copyright__ = '(C) 2026, https://vroncevic.github.io/gen_vhost'
 __credits__ = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__ = '1.0.5'
+__version__ = '1.1.8'
 __maintainer__ = 'Vladimir Roncevic'
 __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
@@ -47,6 +48,7 @@ class GenVhostBundleDependenciesValidator:
 
             :methods:
                 | validate - Validates the gen_vhost bundle dependencies.
+                | is_valid - Checks if the gen_vhost bundle dependencies is valid.
     '''
 
     @classmethod
@@ -75,3 +77,19 @@ class GenVhostBundleDependenciesValidator:
 
             not_none(attribute, ctx, msg_attr_name_none)
             istype(attribute, expected_type, ctx, msg_attr_name_istype)
+
+    @classmethod
+    def is_valid(cls, genvhostbundledependencies: GenVhostBundleDependencies) -> bool:
+        '''
+            Checks if the genvhostbundledependencies is valid.
+
+            :param genvhostbundledependencies: The genvhostbundledependencies to be checked.
+            :return: True if valid, False otherwise.
+        '''
+        try:
+            cls.validate(genvhostbundledependencies)
+            return True
+
+        except (ATSValueError, ATSTypeError):
+            return False
+

@@ -10,7 +10,7 @@ The README is used to introduce the tool and provide instructions on
 how to install the tool, any machine dependencies it may have and any
 other information that should be provided before the tool is installed.
 
-[![gen_vhost python checker](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python_checker.yml/badge.svg)](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python_checker.yml) [![gen_vhost package checker](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_package_checker.yml/badge.svg)](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_package.yml) [![GitHub issues open](https://img.shields.io/github/issues/vroncevic/gen_vhost.svg)](https://github.com/vroncevic/gen_vhost/issues) [![GitHub contributors](https://img.shields.io/github/contributors/vroncevic/gen_vhost.svg)](https://github.com/vroncevic/gen_vhost/graphs/contributors)
+[![gen_vhost python checker](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python_checker.yml/badge.svg)](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_python_checker.yml) [![gen_vhost package checker](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_package_checker.yml/badge.svg)](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_package.yml) [![gen_vhost interface checker](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_interface_checker.yml/badge.svg)](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_interface_checker.yml) [![gen_vhost isp checker](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_isp_checker.yml/badge.svg)](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_isp_checker.yml) [![gen_vhost srp checker](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_srp_checker.yml/badge.svg)](https://github.com/vroncevic/gen_vhost/actions/workflows/gen_vhost_srp_checker.yml) [![GitHub issues open](https://img.shields.io/github/issues/vroncevic/gen_vhost.svg)](https://github.com/vroncevic/gen_vhost/issues) [![GitHub contributors](https://img.shields.io/github/contributors/vroncevic/gen_vhost.svg)](https://github.com/vroncevic/gen_vhost/graphs/contributors)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -117,46 +117,46 @@ Tool structure
 ```bash
     gen_vhost/
          ├── core/
-         │   ├── __init__.py
-         │   ├── model/
-         │   │   ├── __init__.py
-         │   │   └── project_setup.py
-         │   └── service/
-         │       ├── engine.py
-         │       ├── __init__.py
-         │       ├── iservice.py
-         │       └── isubprocessor.py
+         │   ├── __init__.py
+         │   ├── model/
+         │   │   ├── __init__.py
+         │   │   └── project_setup.py
+         │   └── service/
+         │       ├── engine.py
+         │       ├── __init__.py
+         │       ├── iservice.py
+         │       └── isubprocessor.py
          ├── engine.py
          ├── infrastructure/
-         │   ├── cli/
-         │   │   ├── engine.py
-         │   │   ├── icli.py
-         │   │   ├── __init__.py
-         │   │   └── setup/
-         │   │       ├── bundle.py
-         │   │       ├── dep_validator.py
-         │   │       ├── dependencies.py
-         │   │       ├── factory.py
-         │   │       ├── __init__.py
-         │   │       ├── keys.py
-         │   │       ├── opt_validator.py
-         │   │       ├── options.py
-         │   │       ├── registry.py
-         │   │       └── validator.py
-         │   ├── command/
-         │   │   ├── command.py
-         │   │   ├── gen_vhost_command_definition.py
-         │   │   ├── gen_vhost_command_executor.py
-         │   │   ├── icommand_definition.py
-         │   │   ├── icommand_executor.py
-         │   │   └── __init__.py
-         │   ├── config/
-         │   │   ├── gen_vhost.cfg
-         │   │   ├── gen_vhost.logo
-         │   │   ├── scheme.json
-         │   │   └── templates.tgz
-         │   ├── __init__.py
-         │   └── subprocessor.py
+         │   ├── cli/
+         │   │   ├── engine.py
+         │   │   ├── icli.py
+         │   │   ├── __init__.py
+         │   │   └── setup/
+         │   │       ├── bundle.py
+         │   │       ├── dep_validator.py
+         │   │       ├── dependencies.py
+         │   │       ├── factory.py
+         │   │       ├── __init__.py
+         │   │       ├── keys.py
+         │   │       ├── opt_validator.py
+         │   │       ├── options.py
+         │   │       ├── registry.py
+         │   │       └── validator.py
+         │   ├── command/
+         │   │   ├── command.py
+         │   │   ├── gen_vhost_command_definition.py
+         │   │   ├── gen_vhost_command_executor.py
+         │   │   ├── icommand_definition.py
+         │   │   ├── icommand_executor.py
+         │   │   └── __init__.py
+         │   ├── config/
+         │   │   ├── gen_vhost.cfg
+         │   │   ├── gen_vhost.logo
+         │   │   ├── scheme.json
+         │   │   └── templates.tgz
+         │   ├── __init__.py
+         │   └── subprocessor.py
          ├── __init__.py
          ├── py.typed
          └── setup/
@@ -171,7 +171,7 @@ Tool structure
              ├── registry.py
              └── validator.py
 
-       10 directories, 45 files
+     10 directories, 45 files
 ```
 </details>
 
@@ -191,47 +191,47 @@ Tool structure
 
 | Name | Stmts | Miss | Cover |
 |------|-------|------|-------|
-| `gen_vhost/__init__.py` | 8 | 0 | 100%|
+| `gen_vhost/__init__.py` | 9 | 0 | 100%|
 | `gen_vhost/core/__init__.py` | 9 | 0 | 100%|
 | `gen_vhost/core/model/__init__.py` | 9 | 0 | 100%|
 | `gen_vhost/core/model/project_setup.py` | 14 | 0 | 100%|
 | `gen_vhost/core/service/__init__.py` | 9 | 0 | 100%|
-| `gen_vhost/core/service/engine.py` | 27 | 3 | 89%|
+| `gen_vhost/core/service/engine.py` | 27 | 0 | 100%|
 | `gen_vhost/core/service/iservice.py` | 14 | 0 | 100%|
 | `gen_vhost/core/service/isubprocessor.py` | 14 | 0 | 100%|
 | `gen_vhost/engine.py` | 57 | 0 | 100%|
-| `gen_vhost/infrastructure/__init__.py` | 8 | 0 | 100%|
+| `gen_vhost/infrastructure/__init__.py` | 9 | 0 | 100%|
 | `gen_vhost/infrastructure/cli/__init__.py` | 9 | 0 | 100%|
-| `gen_vhost/infrastructure/cli/engine.py` | 39 | 7 | 82%|
-| `gen_vhost/infrastructure/cli/icli.py` | 16 | 2 | 88%|
+| `gen_vhost/infrastructure/cli/engine.py` | 39 | 0 | 100%|
+| `gen_vhost/infrastructure/cli/icli.py` | 14 | 0 | 100%|
 | `gen_vhost/infrastructure/cli/setup/__init__.py` | 9 | 0 | 100%|
-| `gen_vhost/infrastructure/cli/setup/bundle.py` | 22 | 1 | 95%|
-| `gen_vhost/infrastructure/cli/setup/dep_validator.py` | 28 | 0 | 100%|
+| `gen_vhost/infrastructure/cli/setup/bundle.py` | 22 | 0 | 100%|
+| `gen_vhost/infrastructure/cli/setup/dep_validator.py` | 36 | 0 | 100%|
 | `gen_vhost/infrastructure/cli/setup/dependencies.py` | 18 | 0 | 100%|
-| `gen_vhost/infrastructure/cli/setup/factory.py` | 32 | 0 | 100%|
+| `gen_vhost/infrastructure/cli/setup/factory.py` | 35 | 0 | 100%|
 | `gen_vhost/infrastructure/cli/setup/keys.py` | 26 | 0 | 100%|
-| `gen_vhost/infrastructure/cli/setup/opt_validator.py` | 28 | 0 | 100%|
+| `gen_vhost/infrastructure/cli/setup/opt_validator.py` | 36 | 0 | 100%|
 | `gen_vhost/infrastructure/cli/setup/options.py` | 15 | 0 | 100%|
-| `gen_vhost/infrastructure/cli/setup/registry.py` | 21 | 0 | 100%|
-| `gen_vhost/infrastructure/cli/setup/validator.py` | 35 | 0 | 100%|
+| `gen_vhost/infrastructure/cli/setup/registry.py` | 24 | 0 | 100%|
+| `gen_vhost/infrastructure/cli/setup/validator.py` | 43 | 0 | 100%|
 | `gen_vhost/infrastructure/command/__init__.py` | 9 | 0 | 100%|
 | `gen_vhost/infrastructure/command/command.py` | 16 | 0 | 100%|
-| `gen_vhost/infrastructure/command/gen_vhost_command_definition.py` | 24 | 1 | 96%|
-| `gen_vhost/infrastructure/command/gen_vhost_command_executor.py` | 25 | 5 | 80%|
-| `gen_vhost/infrastructure/command/icommand_definition.py` | 15 | 0 | 100%|
-| `gen_vhost/infrastructure/command/icommand_executor.py` | 14 | 1 | 93%|
-| `gen_vhost/infrastructure/subprocessor.py` | 59 | 22 | 63%|
+| `gen_vhost/infrastructure/command/gen_vhost_command_definition.py` | 24 | 0 | 100%|
+| `gen_vhost/infrastructure/command/gen_vhost_command_executor.py` | 25 | 0 | 100%|
+| `gen_vhost/infrastructure/command/icommand_definition.py` | 14 | 0 | 100%|
+| `gen_vhost/infrastructure/command/icommand_executor.py` | 13 | 0 | 100%|
+| `gen_vhost/infrastructure/subprocessor.py` | 59 | 0 | 100%|
 | `gen_vhost/setup/__init__.py` | 9 | 0 | 100%|
-| `gen_vhost/setup/bundle.py` | 23 | 1 | 96%|
-| `gen_vhost/setup/dep_validator.py` | 28 | 0 | 100%|
+| `gen_vhost/setup/bundle.py` | 23 | 0 | 100%|
+| `gen_vhost/setup/dep_validator.py` | 36 | 0 | 100%|
 | `gen_vhost/setup/dependencies.py` | 19 | 0 | 100%|
-| `gen_vhost/setup/factory.py` | 45 | 1 | 98%|
-| `gen_vhost/setup/keys.py` | 27 | 1 | 96%|
-| `gen_vhost/setup/opt_validator.py` | 26 | 9 | 65%|
+| `gen_vhost/setup/factory.py` | 48 | 0 | 100%|
+| `gen_vhost/setup/keys.py` | 27 | 0 | 100%|
+| `gen_vhost/setup/opt_validator.py` | 34 | 0 | 100%|
 | `gen_vhost/setup/options.py` | 12 | 0 | 100%|
-| `gen_vhost/setup/registry.py` | 29 | 0 | 100%|
-| `gen_vhost/setup/validator.py` | 40 | 0 | 100%|
-| **Total** | 887 | 54 | 94% |
+| `gen_vhost/setup/registry.py` | 32 | 0 | 100%|
+| `gen_vhost/setup/validator.py` | 49 | 0 | 100%|
+| **Total** | 946 | 0 | 100% |
 
 </details>
 

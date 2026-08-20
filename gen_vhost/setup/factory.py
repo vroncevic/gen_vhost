@@ -47,7 +47,7 @@ __author__ = 'Vladimir Roncevic'
 __copyright__ = '(C) 2026, https://vroncevic.github.io/gen_vhost'
 __credits__ = ['Vladimir Roncevic', 'Python Software Foundation']
 __license__ = 'https://github.com/vroncevic/gen_vhost/blob/dev/LICENSE'
-__version__ = '1.0.5'
+__version__ = '1.1.8'
 __maintainer__ = 'Vladimir Roncevic'
 __email__ = 'elektron.ronca@gmail.com'
 __status__ = 'Updated'
@@ -63,6 +63,7 @@ class GenVhostBundleFactory:
                 | _info_file - Path to the gen_vhost info file.
             :methods:
                 | create_bundle - Creates the gen_vhost bundle with optional pre-configured options.
+                | get_version - Returns the factory version.
     '''
 
     _info_file: str = 'gen_vhost/infrastructure/config/gen_vhost.cfg'
@@ -129,3 +130,14 @@ class GenVhostBundleFactory:
                 cli=cli
             )
         )
+
+    @classmethod
+    def get_version(cls) -> str:
+        '''
+            Returns the factory version.
+
+            :return: The factory version.
+            :exceptions: None.
+        '''
+        return __version__
+

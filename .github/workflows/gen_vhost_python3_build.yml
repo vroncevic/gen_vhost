@@ -1,14 +1,14 @@
 name: gen_vhost_python3_build
 on:
   push:
-    branches: [ master ]
+    branches: [ master, main ]
     paths:
       - 'gen_vhost/**'
       - 'MANIFEST.in'
       - 'pyproject.toml'
       - 'setup.py'
   pull_request:
-    branches: [ master ]
+    branches: [ master, main ]
     paths:
       - 'gen_vhost/**'
       - 'MANIFEST.in'
